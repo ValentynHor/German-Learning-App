@@ -1,7 +1,7 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import VerbsPage from './pages/material/VerbsPage';
+import VerbsPage from './pages/VerbsPage';
 
 function App() {
   return (

@@ -11,13 +11,15 @@ export default function NavbarMenu(props: MenuProps) {
   return (
     <nav className={`${styles.menu} ${menuColorClass}`}>
       <p>
-        <a href="/src/pages">Home</a>
+        <a href="/">Home</a>
       </p>
       <p>
-        <a href="src/components/navbarMenu/NavbarMenu#sectionAboutUs">Über uns</a>
+        <a href="/">Über uns</a>
       </p>
       <p>
-        <a href="src/components/navbarMenu/NavbarMenu#sectionMaterial">Material</a>
+        <a href="src/components/navbarMenu/NavbarMenu#sectionMaterial">
+          Material
+        </a>
       </p>
       <p>
         <a href="src/components/navbarMenu/NavbarMenu#sectionTheme">Themen</a>

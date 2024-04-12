@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'Annie';
-  src: url('src/fonts/AnnieUseYourTelescope-Regular.ttf') format('truetype');
+  src: url('/src/fonts/AnnieUseYourTelescope-Regular.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'SFProDisplay';
-  src: url('src/fonts/SF-Pro-Display-Regular.otf') format('opentype');
+  src: url('/src/fonts/SF-Pro-Display-Regular.otf') format('opentype');
 }
 
 :root {
@@ -19,4 +19,6 @@
   --color-text: #fefefe;
   --color-text2: #ef7407;
   --color-text3: #202020;
+
+  --color-red: #ee1515;
 }

@@ -1,0 +1,54 @@
+.topContainer {
+  margin: 40px 80px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+}
+
+.topContainer h1 {
+  padding: 10px;
+  font-family: 'Annie';
+  font-weight: 400;
+  font-size: 96px;
+  line-height: 104px;
+  color: var(--color-red);
+}
+
+.topContainer img {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  width: 350px;
+  height: 215px;
+}
+
+.verbsContainer {
+  margin: 0 80px;
+  width: 1240px;
+  display: flex;
+  flex-wrap: wrap;
+
+  max-height: 320px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.verbsContainer button {
+  margin: 0 24px;
+  margin-bottom: 40px;
+  padding: 10px;
+  font-family: 'SFProDisplay';
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 40px;
+  color: var(--color-text3);
+  background-color: var(--color-bg);
+  border: 0;
+}
+
+.verbsContainer button:hover {
+  color: var(--color-hover);
+  cursor: pointer;
+}
