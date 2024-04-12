@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 interface BtnWithHoverProps {
-  href: string;
+  href?: string;
   btn: string;
   btnHover: string;
   btnName: string;

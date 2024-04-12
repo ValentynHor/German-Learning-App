@@ -71,7 +71,6 @@ export const verbs = [
     name: 'essen',
     isWithHaben: true,
     index: [3, 4],
-    picture: '',
     part1: [
       {
         subName: 'esse',
@@ -90,22 +89,18 @@ export const verbs = [
       {
         subName: 'einen Apfel',
         index: [3, 4],
-        picture: '',
       },
       {
         subName: 'eine Banane',
         index: [3],
-        picture: '',
       },
       {
         subName: 'ein Eis',
         index: [],
-        picture: '',
       },
       {
         subName: 'eine Käse',
         index: [3],
-        picture: '',
       },
     ],
     part3: ['gegessen'],
