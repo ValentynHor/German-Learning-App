@@ -1,0 +1,47 @@
+.tabelleContainer {
+  margin-top: 100px;
+  padding: 40px 189px;
+  height: 300px;
+
+  display: flex;
+}
+
+.tabelleContainer h3 {
+  width: 411px;
+  padding: 10px;
+
+  font-family: 'Annie';
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+  color: var(--color-text3);
+}
+
+.tabelleContainer img {
+  align-self: flex-end;
+
+  /* transform: rotate(-32.49deg); */
+  margin: 0 5px;
+  width: 90px;
+  height: 160px;
+}
+
+.tabelleContainer button {
+  align-self: flex-end;
+
+  height: 50px;
+  width: 193px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: var(--color-bg2);
+  border: 0;
+
+  font-family: 'SF Pro Display';
+  font-size: 18px;
+  color: var(--color-bg);
+}
+
+.tabelleContainer button:hover {
+  cursor: pointer;
+  background-color: var(--color-hover);
+}

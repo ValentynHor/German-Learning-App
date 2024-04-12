@@ -1,0 +1,6 @@
+#docker run --name german-learning-db -p 27017:27017 mongo:7
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/german-learning-db
+

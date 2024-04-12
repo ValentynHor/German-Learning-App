@@ -1,0 +1,22 @@
+.menu {
+  display: flex;
+  justify-content: space-around;
+  width: 628px;
+  padding: 10px;
+}
+
+.menuColorBlack a {
+  font-family: 'SFProDisplay';
+  font-size: 18px;
+  color: var(--color-text3);
+}
+
+.menuColorWhite a {
+  font-family: 'SFProDisplay';
+  font-size: 18px;
+  color: var(--color-text);
+}
+
+.menu a:hover {
+  color: var(--color-hover);
+}

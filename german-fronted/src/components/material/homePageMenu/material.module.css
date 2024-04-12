@@ -1,0 +1,38 @@
+.themeContainer {
+  margin-top: 100px;
+  padding: 40px 80px;
+  height: 650px;
+  position: relative;
+}
+
+.themeContainer h3 {
+  font-family: 'Annie';
+  font-weight: 400;
+  font-size: 32px;
+  text-align: center;
+  color: var(--color-text3);
+}
+
+.arrows {
+  position: absolute;
+  top: 120px;
+  left: 80px;
+  z-index: -1;
+}
+
+.headerContainer,
+.footerContainer {
+  position: relative;
+  z-index: 1;
+}
+
+.headerContainer {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footerContainer {
+  display: flex;
+  justify-content: space-around;
+}

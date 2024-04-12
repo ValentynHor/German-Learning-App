@@ -1,0 +1,60 @@
+.cta {
+  margin-top: 77px;
+  margin-left: 80px;
+}
+
+.container {
+  display: flex;
+}
+
+.ctaLeft {
+  width: 736px;
+}
+
+.ctaLeft h1 {
+  font-family: Annie;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 96px;
+  line-height: 104px;
+  padding: 10px;
+} 
+
+.ctaLeft p {
+  margin-top: 32px;
+  margin-bottom: 32px;
+  padding: 10px;
+  font-family: SFProDisplay;
+  font-size: 18px;
+  line-height: 104px;
+  color: var(--color-text3);
+}
+
+.ctaLeft button {
+  width: 300px;
+  height: 50px;
+
+  background-color: var(--color-bg2);
+  padding: 17px 30px;
+  border-radius: 8px;
+  border: none;
+
+  font-family: 'SF Pro Display';
+  font-size: 18px;
+  color: var(--color-text);
+}
+
+.ctaLeft button:hover {
+  cursor: pointer;
+  background-color: var(--color-hover);
+}
+
+.ctaRight {
+  margin-left: 56px;
+  margin-right: 56px;
+}
+
+.ctaRight img {
+  width: 430px;
+  height: 430px;
+}

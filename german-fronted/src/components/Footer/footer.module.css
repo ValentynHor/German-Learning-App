@@ -1,0 +1,39 @@
+.footer {
+  margin-top: 100px;
+  padding: 20px 80px;
+  height: 235px;
+  background-color: var(--color-bg2);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.email p {
+  padding: 10px;
+  font-family: 'SFProDisplay';
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--color-bg);
+}
+
+.email button {
+  width: 193px;
+  padding: 8px 16px;
+
+  font-family: 'SFProDisplay';
+  font-weight: 500;
+  font-size: 18px;
+  background-color: var(--color-bg2);
+  color: var(--color-bg);
+  text-align: right;
+  text-align-last: justify;
+
+  border-radius: 8px;
+  border: 1px solid var(--color-bg);
+}
+
+.email button:hover {
+  cursor: pointer;
+  background-color: var(--color-hover);
+}
