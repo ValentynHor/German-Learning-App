@@ -10,7 +10,7 @@ Dieses Projekt demonstriert meine umfassende Kompetenz in angewandten Technologi
 - Lombok & Devtools
 
 
-# **_V1.0.1_** : Figma -> React.ts; VerbEntity -> MongoDB 
+# **_V1.1.1_** : Figma - `HomePage`- DB 
 
 ### home page
 Diese Version enthält die Umsetzung eines Designs aus Figma in eine React.ts-Anwendung. Das Projektbild aus Figma wurde als Ausgangspunkt genommen, um die Benutzeroberfläche mithilfe von React.ts zu entwickeln. Es umfasst die Umsetzung der Hauptseite und legt den Grundstein für weitere Funktionen und Seiten innerhalb der Anwendung.
@@ -27,6 +27,17 @@ Um einen MongoDB-Container mit Docker zu erstellen, kannst du den folgenden Befe
 ```
 docker run --name german-learning-db -p 27017:27017 mongo:7
 ```
+
+# **_V1.1.2_** : Figma - `VerbsPage` - DB 
+
+### verbs page
+
+VerbsPage wurde von Figma implementiert, wo das Design und die Benutzeroberfläche für die Anzeige und Interaktion mit Verben erstellt wurden.
+
+
+
+
+
 
 
 

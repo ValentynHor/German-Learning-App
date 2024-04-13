@@ -1,12 +1,12 @@
-.part0 {
+.part {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   margin: 40px 80px;
+  align-items: center;
 }
 
-.part0 h3 {
+.part h3 {
+  margin: 8px 0px;
   font-family: 'SFProDisplay';
   font-weight: 500;
   font-size: 96px;
@@ -14,24 +14,16 @@
   color: var(--color-text3);
 }
 
-.part0 img {
+.part img {
   width: 410px;
   height: 340px;
 }
 
-.arrow {
-  padding: 0 300px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.btnNext,
-.btnBack {
+.part button {
   background-color: var(--color-bg);
   border: 0;
 }
-.btnNext:hover,
-.btnBack:hover {
-  background-color: #edebeb;
+
+.part button:hover {
   cursor: pointer;
 }

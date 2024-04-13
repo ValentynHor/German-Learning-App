@@ -35,7 +35,9 @@ export default function Verbs() {
           </>
         )}
       </div>
-      {showVerb && <ShowVerb index={currentVerbIndex} />}
+      {showVerb && (
+        <ShowVerb index={currentVerbIndex} setShowVerb={setShowVerb} />
+      )}
     </>
   );
 }

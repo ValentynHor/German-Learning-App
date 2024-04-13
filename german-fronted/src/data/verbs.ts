@@ -1,5 +1,13 @@
-export const sentsWithHaben = ['ich habe', 'er hat', 'sie hat', 'sie haben'];
-export const sentsWithSein = ['ich bin', 'er is', 'sie ist', 'sie haben'];
+export const sentsWithHaben = [
+  { name: 'habe', index: [0, 1, 2, 3] },
+  { name: 'hat', index: [0, 1, 2] },
+  { name: 'haben', index: [0, 1, 2, 3, 4] },
+];
+export const sentsWithSein = [
+  { name: 'bin', index: [0, 1, 2] },
+  { name: 'ist', index: [0, 1, 2] },
+  { name: 'sind', index: [0, 1, 2, 3] },
+];
 
 export const pronouns = ['ich', 'er,sie,es', 'sie'];
 
@@ -66,11 +74,32 @@ export const pronouns = ['ich', 'er,sie,es', 'sie'];
   { name: 'fahren' },
 ]; */
 
-export const verbs = [
+type Prefix = {
+  prefix: string;
+  prefixIndex: number[];
+};
+
+type Part = {
+  subName: string;
+  index: number[];
+};
+
+export interface IVerbs {
+  name: string;
+  index: number[];
+  isWithHaben: boolean;
+  prefix: null | Prefix;
+  part1: Part[];
+  part2: Part[];
+  part3: Part;
+}
+
+export const verbs: IVerbs[] = [
   {
     name: 'essen',
     isWithHaben: true,
     index: [3, 4],
+    prefix: null,
     part1: [
       {
         subName: 'esse',
@@ -103,13 +132,13 @@ export const verbs = [
         index: [3],
       },
     ],
-    part3: ['gegessen'],
+    part3: { subName: 'gegessen', index: [0, 1] },
   },
   {
     name: 'klettern',
     index: [7],
-    picture: '',
     isWithHaben: false,
+    prefix: null,
     part1: [
       {
         subName: 'klettere',
@@ -128,14 +157,43 @@ export const verbs = [
       {
         subName: 'auf den Baum',
         index: [4, 5, 6],
-        picture: '',
       },
       {
         subName: 'auf die Mauer',
         index: [4, 5, 6],
-        picture: '',
       },
     ],
-    part3: ['geklettert'],
+    part3: { subName: 'geklettert', index: [0, 1] },
+  },
+  {
+    name: 'anziehen',
+    index: [6, 7],
+    isWithHaben: true,
+    prefix: {
+      prefix: 'an',
+      prefixIndex: [0, 1],
+    },
+
+    part1: [
+      {
+        subName: 'ziehe',
+        index: [4],
+      },
+      {
+        subName: 'zieht',
+        index: [4],
+      },
+      {
+        subName: 'ziehen',
+        index: [4, 5],
+      },
+    ],
+    part2: [
+      {
+        subName: 'eine Jacke',
+        index: [3],
+      },
+    ],
+    part3: { subName: 'angezogen', index: [2, 3] },
   },
 ];
