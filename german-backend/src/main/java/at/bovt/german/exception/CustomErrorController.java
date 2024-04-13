@@ -31,9 +31,10 @@ public class CustomErrorController implements ErrorController {
                 .status((Integer) attributes.get("status"))
                 .body(ErrorDTO
                         .builder()
-                        .error((String) attributes.get("error"))
                         .errorDescription((String) attributes.get("message"))
                         .build()
                 );
     }
+
+
 }

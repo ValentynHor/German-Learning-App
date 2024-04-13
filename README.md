@@ -33,6 +33,12 @@ docker run --name german-learning-db -p 27017:27017 mongo:7
 Die VerbsPage bietet die Möglichkeit, verschiedene Verben auszuwählen und zu üben. Zum Beispiel können Sie Verben wie "essen" auswählen und die Konjugationen üben, wie "ich esse", "er isst einen Apfel", "sie haben einen Käse gegessen". Darüber hinaus wurde Navigation mithilfe von Breadcrumbs und mit Pfeilen implementiert, um zwischen den Übungen und Seiten zu springen.
 ![firma.v1.0.1](images/v.1.0.2/verbsPage_V1.1.2.png)
 
+# **_V1.1.3_** : `VerbEntity`
+
+Bei der Aktualisierung von VerbEntity werden nun alle Felder validiert. Wenn falsche oder kritische Daten, wie Nullwerte, gespeichert werden, löst dies eine Ausnahme aus.
+
+Die Daten werden nun von der Datenbank in VerbsPage abgerufen.
+
 
 
 

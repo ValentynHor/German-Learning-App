@@ -1,3 +1,5 @@
+import { IVerb } from './interfaces';
+
 export const sentsWithHaben = [
   { name: 'habe', index: [0, 1, 2, 3] },
   { name: 'hat', index: [0, 1, 2] },
@@ -74,32 +76,13 @@ export const pronouns = ['ich', 'er,sie,es', 'sie'];
   { name: 'fahren' },
 ]; */
 
-type Prefix = {
-  prefix: string;
-  prefixIndex: number[];
-};
-
-type Part = {
-  subName: string;
-  index: number[];
-};
-
-export interface IVerbs {
-  name: string;
-  index: number[];
-  isWithHaben: boolean;
-  prefix: null | Prefix;
-  part1: Part[];
-  part2: Part[];
-  part3: Part;
-}
-
-export const verbs: IVerbs[] = [
+export const verbs: IVerb[] = [
   {
     name: 'essen',
     isWithHaben: true,
     index: [3, 4],
     prefix: null,
+    image: 'essen0',
     part1: [
       {
         subName: 'esse',
@@ -118,18 +101,22 @@ export const verbs: IVerbs[] = [
       {
         subName: 'einen Apfel',
         index: [3, 4],
+        image: 'essen1',
       },
       {
         subName: 'eine Banane',
         index: [3],
+        image: 'essen2',
       },
       {
         subName: 'ein Eis',
         index: [],
+        image: 'essen3',
       },
       {
         subName: 'einen Käse',
         index: [3],
+        image: 'essen4',
       },
     ],
     part3: { subName: 'gegessen', index: [0, 1] },
@@ -139,6 +126,7 @@ export const verbs: IVerbs[] = [
     index: [7],
     isWithHaben: false,
     prefix: null,
+    image: 'klettern0',
     part1: [
       {
         subName: 'klettere',
@@ -157,10 +145,12 @@ export const verbs: IVerbs[] = [
       {
         subName: 'auf den Baum',
         index: [4, 5, 6],
+        image: 'klettern1',
       },
       {
         subName: 'auf die Mauer',
         index: [4, 5, 6],
+        image: 'klettern2',
       },
     ],
     part3: { subName: 'geklettert', index: [0, 1] },
@@ -169,6 +159,7 @@ export const verbs: IVerbs[] = [
     name: 'anziehen',
     index: [6, 7],
     isWithHaben: true,
+    image: 'anziehen0',
     prefix: {
       prefix: 'an',
       prefixIndex: [0, 1],
@@ -192,6 +183,7 @@ export const verbs: IVerbs[] = [
       {
         subName: 'eine Jacke',
         index: [3],
+        image: 'anziehen1',
       },
     ],
     part3: { subName: 'angezogen', index: [2, 3] },

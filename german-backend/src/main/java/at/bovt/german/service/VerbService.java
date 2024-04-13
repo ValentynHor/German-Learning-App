@@ -6,11 +6,13 @@ import at.bovt.german.exception.DuplicateKeyException;
 import at.bovt.german.exception.EmptyNameException;
 import at.bovt.german.exception.NotFoundException;
 import at.bovt.german.repository.VerbRepository;
+import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,12 +25,24 @@ public class VerbService {
     }
 
     public VerbEntity createVerb(VerbEntity entity){
-        if(entity.getName().trim().equals("")){
-            throw new EmptyNameException("Name can't be empty");
-        }
         if (verbRepository.existsByNameIgnoreCase(entity.getName())){
             throw new DuplicateKeyException("Verb with name '%s' is already exist".formatted(entity.getName()));
         }
+        if (entity.getPart1().stream().anyMatch(part -> part.getIndex() == null ||
+                StringUtils.isBlank(part.getSubName()))) {
+            throw new EmptyNameException("Value from Part1 can't be null or empty");
+        }
+        if (entity.getPart2().stream().anyMatch(part -> part.getIndex() == null ||
+                StringUtils.isBlank(part.getSubName()) ||
+                StringUtils.isBlank(part.getImage()))) {
+            throw new EmptyNameException("Value from Part2 can't be null or empty");
+        }
+        if (StringUtils.isBlank(entity.getPart3().getSubName()) ||
+                entity.getPart3().getIndex() == null){
+            throw new EmptyNameException("Value from Part3 can't be null or empty");
+        }
+
+        entity.setId(UUID.randomUUID().toString());
         entity.setCreatedAt(Instant.now());
         return verbRepository.save(entity);
     }

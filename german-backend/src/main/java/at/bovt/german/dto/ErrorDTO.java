@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ErrorDTO {
 
-    String error;
-
     @JsonProperty("error_description")
     String errorDescription;
 }

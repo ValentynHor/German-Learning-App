@@ -1,18 +1,18 @@
 package at.bovt.german.controller;
 
-
 import at.bovt.german.dto.AckDTO;
 import at.bovt.german.dto.VerbDTO;
 import at.bovt.german.entity.VerbEntity;
 import at.bovt.german.factory.VerbDTOFactory;
 import at.bovt.german.service.VerbService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -37,8 +37,7 @@ public class VerbController {
     }
 
     @PostMapping(CREATE_VERB)
-    public ResponseEntity<VerbDTO> createVerb(@RequestBody VerbEntity entity){
-        entity.setId(UUID.randomUUID().toString());
+    public ResponseEntity<VerbDTO> createVerb( @Valid @RequestBody VerbEntity entity){
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(verbDTOFactory.createFirmDTO(verbService.createVerb(entity)));

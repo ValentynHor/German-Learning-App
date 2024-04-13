@@ -1,21 +1,22 @@
 import styles from './showVerb.module.css';
 import { useEffect, useState } from 'react';
-import { verbs } from '../../../data/verbs';
-import { pronouns } from '../../../data/verbs';
 import NavigationButton from '../../navBtn/NavigationButton';
+import { pronouns } from '../../../data/verbs';
 import { sentsWithHaben } from '../../../data/verbs';
 import { sentsWithSein } from '../../../data/verbs';
+import { IVerb } from '../../../data/interfaces';
+// import { verbs } from '../../../data/verbs';
 
 interface ShowVerbProps {
-  index: number;
+  verb: IVerb;
   setShowVerb: (value: boolean) => void;
   setShowTop: (value: boolean) => void;
 }
 
 export default function ShowVerb(props: ShowVerbProps) {
-  const { index } = props;
-  const name = verbs[index].name;
-  const count = verbs[index].part2.length;
+  const verb = props.verb;
+  const name = verb.name;
+  const count = verb.part2.length;
   const [part1Ind, setPart1Ind] = useState<number>(0);
   const [part2Ind, setPart2Ind] = useState<number>(0);
   const [showMenu0, setShowMenu0] = useState<boolean>(true);
@@ -89,11 +90,11 @@ export default function ShowVerb(props: ShowVerbProps) {
   };
 
   const handleBtnPart1 = () => {
-    setPart1Ind((prevIndex) => (prevIndex + 1) % verbs[index].part1.length);
+    setPart1Ind((prevIndex) => (prevIndex + 1) % verb.part1.length);
   };
 
   const handleBtnPart2 = () => {
-    setPart2Ind((prevIndex) => (prevIndex + 1) % verbs[index].part2.length);
+    setPart2Ind((prevIndex) => (prevIndex + 1) % verb.part2.length);
   };
 
   return (
@@ -101,7 +102,7 @@ export default function ShowVerb(props: ShowVerbProps) {
       {showMenu0 && (
         <>
           <div className={styles.part}>
-            <h3>{renderStyledWord(name, verbs[index].index)}</h3>
+            <h3>{renderStyledWord(name, verb.index)}</h3>
             <img src={images[0]} alt={`${name}`} />
           </div>
           <NavigationButton
@@ -118,15 +119,15 @@ export default function ShowVerb(props: ShowVerbProps) {
               <h3>{pronouns[part1Ind]}</h3>
               <h3>
                 {renderStyledWord(
-                  verbs[index].part1[part1Ind].subName,
-                  verbs[index].part1[part1Ind].index
+                  verb.part1[part1Ind].subName,
+                  verb.part1[part1Ind].index
                 )}
               </h3>
-              {verbs[index].prefix && (
+              {verb.prefix && (
                 <h3>
                   {renderStyledWord(
-                    verbs[index].prefix!.prefix,
-                    verbs[index].prefix!.prefixIndex
+                    verb.prefix!.prefix,
+                    verb.prefix!.prefixIndex
                   )}
                 </h3>
               )}
@@ -147,23 +148,23 @@ export default function ShowVerb(props: ShowVerbProps) {
                 {pronouns[part1Ind]}
                 <span> </span>
                 {renderStyledWord(
-                  verbs[index].part1[part1Ind].subName,
-                  verbs[index].part1[part1Ind].index
+                  verb.part1[part1Ind].subName,
+                  verb.part1[part1Ind].index
                 )}
               </h3>
             </button>
             <button onClick={handleBtnPart2}>
               <h3>
                 {renderStyledWord(
-                  verbs[index].part2[part2Ind].subName,
-                  verbs[index].part2[part2Ind].index
+                  verb.part2[part2Ind].subName,
+                  verb.part2[part2Ind].index
                 )}
                 <span> </span>
-                {verbs[index].prefix && (
+                {verb.prefix && (
                   <>
                     {renderStyledWord(
-                      verbs[index].prefix!.prefix,
-                      verbs[index].prefix!.prefixIndex
+                      verb.prefix!.prefix,
+                      verb.prefix!.prefixIndex
                     )}
                   </>
                 )}
@@ -185,7 +186,7 @@ export default function ShowVerb(props: ShowVerbProps) {
               <h3>
                 {pronouns[part1Ind]}
                 <span> </span>
-                {verbs[index].isWithHaben
+                {verb.isWithHaben
                   ? renderStyledWord(
                       sentsWithHaben[part1Ind].name,
                       sentsWithHaben[part1Ind].index
@@ -199,12 +200,7 @@ export default function ShowVerb(props: ShowVerbProps) {
             <button onClick={handleBtnPart2}>
               <img src={images[part2Ind + 1]} alt={`${name}`} />
             </button>
-            <h3>
-              {renderStyledWord(
-                verbs[index].part3.subName,
-                verbs[index].part3.index
-              )}
-            </h3>
+            <h3>{renderStyledWord(verb.part3.subName, verb.part3.index)}</h3>
           </div>
           <NavigationButton
             onClickBack={handleClickToMenu2}
