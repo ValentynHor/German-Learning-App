@@ -1,0 +1,11 @@
+.breadCrumbs a {
+  font-family: 'SFProDisplay';
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-text3);
+}
+
+.breadCrumbs a:hover {
+  color: var(--color-hover);
+}

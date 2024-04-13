@@ -1,3 +1,12 @@
+.verbs {
+  height: 465px;
+}
+
+.verbsBreadCrumbs {
+  margin-left: 80px;
+  display: flex;
+}
+
 .topContainer {
   margin: 20px 80px;
   display: flex;

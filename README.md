@@ -28,11 +28,12 @@ Um einen MongoDB-Container mit Docker zu erstellen, kannst du den folgenden Befe
 docker run --name german-learning-db -p 27017:27017 mongo:7
 ```
 
-# **_V1.1.2_** : Figma - `VerbsPage` - DB 
+# **_V1.1.2_** : Figma - `VerbsPage`
 
-### verbs page
+Die VerbsPage bietet die Möglichkeit, verschiedene Verben auszuwählen und zu üben. Zum Beispiel können Sie Verben wie "essen" auswählen und die Konjugationen üben, wie "ich esse", "er isst einen Apfel", "sie haben einen Käse gegessen". Darüber hinaus wurde Navigation mithilfe von Breadcrumbs und mit Pfeilen implementiert, um zwischen den Übungen und Seiten zu springen.
+![firma.v1.0.1](images/v.1.0.2/verbsPage_V1.1.2.png)
 
-VerbsPage wurde von Figma implementiert, wo das Design und die Benutzeroberfläche für die Anzeige und Interaktion mit Verben erstellt wurden.
+
 
 
 

@@ -1,4 +1,5 @@
 import styles from './navbarMenu.module.css';
+import { Link } from 'react-router-dom';
 
 interface MenuProps {
   color: 'black' | 'white';
@@ -11,18 +12,16 @@ export default function NavbarMenu(props: MenuProps) {
   return (
     <nav className={`${styles.menu} ${menuColorClass}`}>
       <p>
-        <a href="/">Home</a>
+        <Link to="/">Home</Link>
       </p>
       <p>
-        <a href="/">Über uns</a>
+        <Link to="/#sectionAboutUs">Über uns</Link>
       </p>
       <p>
-        <a href="src/components/navbarMenu/NavbarMenu#sectionMaterial">
-          Material
-        </a>
+        <Link to="/#sectionMaterial">Material</Link>
       </p>
       <p>
-        <a href="src/components/navbarMenu/NavbarMenu#sectionTheme">Themen</a>
+        <Link to="/#sectionTheme">Themen</Link>
       </p>
     </nav>
   );

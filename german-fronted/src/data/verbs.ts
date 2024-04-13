@@ -128,7 +128,7 @@ export const verbs: IVerbs[] = [
         index: [],
       },
       {
-        subName: 'eine Käse',
+        subName: 'einen Käse',
         index: [3],
       },
     ],

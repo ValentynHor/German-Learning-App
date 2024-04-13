@@ -1,12 +1,14 @@
-.part {
+.part,
+.part2 {
   display: flex;
   flex-direction: column;
-  margin: 40px 80px;
+  margin: 0 80px;
   align-items: center;
+  height: 465px;
 }
 
 .part h3 {
-  margin: 8px 0px;
+  margin: 8px 0;
   font-family: 'SFProDisplay';
   font-weight: 500;
   font-size: 96px;
@@ -14,16 +16,28 @@
   color: var(--color-text3);
 }
 
-.part img {
+.part2 h3 {
+  margin: 8px 0;
+  font-family: 'SFProDisplay';
+  font-weight: 500;
+  font-size: 64px;
+  line-height: 72px;
+  color: var(--color-text3);
+}
+
+.part img,
+.part2 img {
   width: 410px;
   height: 340px;
 }
 
-.part button {
+.part button,
+.part2 button {
   background-color: var(--color-bg);
   border: 0;
 }
 
-.part button:hover {
+.part button:hover,
+.part2 button:hover {
   cursor: pointer;
 }

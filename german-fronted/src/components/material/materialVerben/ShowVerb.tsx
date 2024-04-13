@@ -9,6 +9,7 @@ import { sentsWithSein } from '../../../data/verbs';
 interface ShowVerbProps {
   index: number;
   setShowVerb: (value: boolean) => void;
+  setShowTop: (value: boolean) => void;
 }
 
 export default function ShowVerb(props: ShowVerbProps) {
@@ -17,7 +18,6 @@ export default function ShowVerb(props: ShowVerbProps) {
   const count = verbs[index].part2.length;
   const [part1Ind, setPart1Ind] = useState<number>(0);
   const [part2Ind, setPart2Ind] = useState<number>(0);
-  const [part3Ind, setPart3Ind] = useState<number>(0);
   const [showMenu0, setShowMenu0] = useState<boolean>(true);
   const [showMenu1, setShowMenu1] = useState<boolean>(false);
   const [showMenu2, setShowMenu2] = useState<boolean>(false);
@@ -85,6 +85,7 @@ export default function ShowVerb(props: ShowVerbProps) {
   };
   const handleClickToVerbsMenu = () => {
     props.setShowVerb(false);
+    props.setShowTop(true);
   };
 
   const handleBtnPart1 = () => {
@@ -140,7 +141,7 @@ export default function ShowVerb(props: ShowVerbProps) {
 
       {showMenu2 && (
         <>
-          <div className={styles.part}>
+          <div className={styles.part2}>
             <button onClick={handleBtnPart1}>
               <h3>
                 {pronouns[part1Ind]}
@@ -157,17 +158,18 @@ export default function ShowVerb(props: ShowVerbProps) {
                   verbs[index].part2[part2Ind].subName,
                   verbs[index].part2[part2Ind].index
                 )}
+                <span> </span>
+                {verbs[index].prefix && (
+                  <>
+                    {renderStyledWord(
+                      verbs[index].prefix!.prefix,
+                      verbs[index].prefix!.prefixIndex
+                    )}
+                  </>
+                )}
               </h3>
               <img src={images[part2Ind + 1]} alt={`${name}`} />
             </button>
-            {verbs[index].prefix && (
-              <h3>
-                {renderStyledWord(
-                  verbs[index].prefix!.prefix,
-                  verbs[index].prefix!.prefixIndex
-                )}
-              </h3>
-            )}
           </div>
           <NavigationButton
             onClickBack={handleClickToMenu1}
@@ -178,7 +180,7 @@ export default function ShowVerb(props: ShowVerbProps) {
 
       {showMenu3 && (
         <>
-          <div className={styles.part}>
+          <div className={styles.part2}>
             <button onClick={handleBtnPart1}>
               <h3>
                 {pronouns[part1Ind]}
