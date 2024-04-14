@@ -2,6 +2,7 @@ package at.bovt.german.dto;
 
 import at.bovt.german.entity.PartEntity;
 import at.bovt.german.entity.PartEntityWithImg;
+import at.bovt.german.entity.Prefix;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 
@@ -24,9 +25,7 @@ public class VerbDTO {
 
     private boolean isWithHaben;
 
-    private String prefix;
-
-    private List<Integer> prefixIndex;
+    private Prefix prefix;
 
     private List<PartEntity> part1;
 

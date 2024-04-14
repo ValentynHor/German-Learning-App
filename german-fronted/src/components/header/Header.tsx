@@ -9,7 +9,9 @@ export default function Header() {
       <NavbarMenu color="black" />
 
       <div className={styles.buttons}>
-        <button className={styles.btnDEU}>DEU</button>
+        <button className={styles.btnDEU}>
+          <a href="/admin">ADMIN</a>
+        </button>
         <button className={styles.btnLogIn}>Log in</button>
       </div>
     </header>

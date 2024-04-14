@@ -34,9 +34,7 @@ public class VerbEntity {
 
     private boolean isWithHaben;
 
-    private String prefix;
-
-    private List<Integer> prefixIndex;
+    private Prefix prefix;
 
     @NotNull(message = "Part1 can't be null")
     private List<PartEntity> part1;

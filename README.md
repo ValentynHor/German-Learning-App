@@ -39,6 +39,10 @@ Bei der Aktualisierung von VerbEntity werden nun alle Felder validiert. Wenn fal
 
 Die Daten werden nun von der Datenbank in VerbsPage abgerufen.
 
+# **_V1.1.3_** : `AdminPage`
+
+Es wird die AdminPage eingeführt, um die Verwaltungsfunktionen der Anwendung zu administrieren.
+
 
 
 

@@ -5,6 +5,7 @@
 .verbsBreadCrumbs {
   margin-left: 80px;
   display: flex;
+  justify-content: flex-start;
 }
 
 .topContainer {

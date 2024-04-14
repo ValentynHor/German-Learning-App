@@ -1,0 +1,25 @@
+.sidebar {
+  width: 100%;
+  background-color: var(--color-bg2);
+}
+.logo {
+  margin: 24px 35px;
+}
+
+.logout {
+  background-color: var(--color-bg2);
+  border: 0;
+
+  /* width: 59px;
+  height: 26px;
+
+  font-family: 'SF Pro Display';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 26px; */
+}
+
+.logout:hover {
+  color: var(--color-hover);
+}

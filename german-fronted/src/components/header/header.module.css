@@ -1,9 +1,5 @@
 .header {
-  margin-top: 40px;
-  margin-bottom: 40px;
-  margin-left: 80px;
-  margin-right: 80px;
-
+  margin: 40px 80px;
   display: flex;
   align-items: center;
   height: 96px;
@@ -35,14 +31,18 @@
 }
 
 .btnDEU {
+  border: 0;
+  background-color: var(--color-bg);
+}
+
+.btnDEU a {
   font-size: 16px;
   font-family: SF Pro Display;
   color: var(--color-text3);
-  border: 0;
-  background-color: var(--color-bg);
+
   cursor: pointer;
 }
 
-.btnDEU:hover {
+.btnDEU a:hover {
   color: var(--color-hover);
 }
