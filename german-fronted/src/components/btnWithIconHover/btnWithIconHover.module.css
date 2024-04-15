@@ -1,0 +1,24 @@
+.adminPageButton button {
+  background-color: var(--color-bg2);
+  border: 0;
+  border-radius: 4px;
+  margin: 4px;
+  padding: 4px 0 4px 20px;
+
+  width: 228px;
+  font-family: 'SFProDisplay';
+  font-size: 18px;
+  color: var(--color-bg);
+
+  display: flex;
+  align-items: center;
+}
+
+.adminPageButton button:hover {
+  background-color: var(--color-bg);
+  color: var(--color-bg);
+}
+
+.adminPageButton img {
+  margin-right: 16px;
+}

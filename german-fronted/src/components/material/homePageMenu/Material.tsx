@@ -1,4 +1,4 @@
-import BtnWithHover from './BtnWithHover';
+import BtnWithHover from './AWithHover';
 import styles from './material.module.css';
 
 import {

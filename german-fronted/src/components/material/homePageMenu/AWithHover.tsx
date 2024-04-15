@@ -7,7 +7,7 @@ interface BtnWithHoverProps {
   btnName: string;
 }
 
-export default function BtnWithHover(props: BtnWithHoverProps) {
+export default function AWithHover(props: BtnWithHoverProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   const { href, btn, btnHover, btnName } = props;
