@@ -16,7 +16,7 @@
 
 .adminPageButton button:hover {
   background-color: var(--color-bg);
-  color: var(--color-bg);
+  color: var(--color-text3);
 }
 
 .adminPageButton img {
