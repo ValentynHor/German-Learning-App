@@ -1,4 +1,4 @@
-import styles from './adminBody.module.css';
+//import styles from './adminBody.module.css';
 
 import {
   AdminClass,

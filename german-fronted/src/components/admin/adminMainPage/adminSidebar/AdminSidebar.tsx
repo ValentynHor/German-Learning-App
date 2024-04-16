@@ -24,6 +24,7 @@ export default function AdminSidebar(props: AdminSidebarProps) {
               icon={logoutIcon}
               iconHover={logoutIconHover}
               btnName="Log out"
+              active={false}
             />
           </div>
         </div>
