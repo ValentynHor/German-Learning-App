@@ -188,4 +188,268 @@ export const verbs: IVerb[] = [
     ],
     part3: { subName: 'angezogen', index: [2, 3] },
   },
+  {
+    name: 'anziehen',
+    index: [6, 7],
+    isWithHaben: true,
+    image: 'anziehen0',
+    prefix: {
+      prefix: 'an',
+      prefixIndex: [0, 1],
+    },
+
+    part1: [
+      {
+        subName: 'ziehe',
+        index: [4],
+      },
+      {
+        subName: 'zieht',
+        index: [4],
+      },
+      {
+        subName: 'ziehen',
+        index: [4, 5],
+      },
+    ],
+    part2: [
+      {
+        subName: 'eine Jacke',
+        index: [3],
+        image: 'anziehen1',
+      },
+    ],
+    part3: { subName: 'angezogen', index: [2, 3] },
+  },
+  {
+    name: 'anziehen',
+    index: [6, 7],
+    isWithHaben: true,
+    image: 'anziehen0',
+    prefix: {
+      prefix: 'an',
+      prefixIndex: [0, 1],
+    },
+
+    part1: [
+      {
+        subName: 'ziehe',
+        index: [4],
+      },
+      {
+        subName: 'zieht',
+        index: [4],
+      },
+      {
+        subName: 'ziehen',
+        index: [4, 5],
+      },
+    ],
+    part2: [
+      {
+        subName: 'eine Jacke',
+        index: [3],
+        image: 'anziehen1',
+      },
+    ],
+    part3: { subName: 'angezogen', index: [2, 3] },
+  },
+  {
+    name: 'anziehen',
+    index: [6, 7],
+    isWithHaben: true,
+    image: 'anziehen0',
+    prefix: {
+      prefix: 'an',
+      prefixIndex: [0, 1],
+    },
+
+    part1: [
+      {
+        subName: 'ziehe',
+        index: [4],
+      },
+      {
+        subName: 'zieht',
+        index: [4],
+      },
+      {
+        subName: 'ziehen',
+        index: [4, 5],
+      },
+    ],
+    part2: [
+      {
+        subName: 'eine Jacke',
+        index: [3],
+        image: 'anziehen1',
+      },
+    ],
+    part3: { subName: 'angezogen', index: [2, 3] },
+  },
+  {
+    name: 'anziehen',
+    index: [6, 7],
+    isWithHaben: true,
+    image: 'anziehen0',
+    prefix: {
+      prefix: 'an',
+      prefixIndex: [0, 1],
+    },
+
+    part1: [
+      {
+        subName: 'ziehe',
+        index: [4],
+      },
+      {
+        subName: 'zieht',
+        index: [4],
+      },
+      {
+        subName: 'ziehen',
+        index: [4, 5],
+      },
+    ],
+    part2: [
+      {
+        subName: 'eine Jacke',
+        index: [3],
+        image: 'anziehen1',
+      },
+    ],
+    part3: { subName: 'angezogen', index: [2, 3] },
+  },
+  {
+    name: 'anziehen',
+    index: [6, 7],
+    isWithHaben: true,
+    image: 'anziehen0',
+    prefix: {
+      prefix: 'an',
+      prefixIndex: [0, 1],
+    },
+
+    part1: [
+      {
+        subName: 'ziehe',
+        index: [4],
+      },
+      {
+        subName: 'zieht',
+        index: [4],
+      },
+      {
+        subName: 'ziehen',
+        index: [4, 5],
+      },
+    ],
+    part2: [
+      {
+        subName: 'eine Jacke',
+        index: [3],
+        image: 'anziehen1',
+      },
+    ],
+    part3: { subName: 'angezogen', index: [2, 3] },
+  },
+  {
+    name: 'anziehen',
+    index: [6, 7],
+    isWithHaben: true,
+    image: 'anziehen0',
+    prefix: {
+      prefix: 'an',
+      prefixIndex: [0, 1],
+    },
+
+    part1: [
+      {
+        subName: 'ziehe',
+        index: [4],
+      },
+      {
+        subName: 'zieht',
+        index: [4],
+      },
+      {
+        subName: 'ziehen',
+        index: [4, 5],
+      },
+    ],
+    part2: [
+      {
+        subName: 'eine Jacke',
+        index: [3],
+        image: 'anziehen1',
+      },
+    ],
+    part3: { subName: 'angezogen', index: [2, 3] },
+  },
+  {
+    name: 'anziehen',
+    index: [6, 7],
+    isWithHaben: true,
+    image: 'anziehen0',
+    prefix: {
+      prefix: 'an',
+      prefixIndex: [0, 1],
+    },
+
+    part1: [
+      {
+        subName: 'ziehe',
+        index: [4],
+      },
+      {
+        subName: 'zieht',
+        index: [4],
+      },
+      {
+        subName: 'ziehen',
+        index: [4, 5],
+      },
+    ],
+    part2: [
+      {
+        subName: 'eine Jacke',
+        index: [3],
+        image: 'anziehen1',
+      },
+    ],
+    part3: { subName: 'angezogen', index: [2, 3] },
+  },
+  {
+    name: 'anziehen',
+    index: [6, 7],
+    isWithHaben: true,
+    image: 'anziehen0',
+    prefix: {
+      prefix: 'an',
+      prefixIndex: [0, 1],
+    },
+
+    part1: [
+      {
+        subName: 'ziehe',
+        index: [4],
+      },
+      {
+        subName: 'zieht',
+        index: [4],
+      },
+      {
+        subName: 'ziehen',
+        index: [4, 5],
+      },
+    ],
+    part2: [
+      {
+        subName: 'eine Jacke',
+        index: [3],
+        image: 'anziehen1',
+      },
+    ],
+    part3: { subName: 'angezogen', index: [2, 3] },
+  },
 ];

@@ -5,7 +5,7 @@ import {
   logoutIcon,
   logoutIconHover,
 } from '../../../assets/adminPage/pageIconMenu/imports';
-import BtnWithIconHover from '../../../btnWithIconHover/BtnWithIconHover';
+import BtnWithIconHover from '../adminMenu/btnWithIconHover/BtnWithIconHover';
 
 type AdminSidebarProps = {
   setName: (name: string) => void;

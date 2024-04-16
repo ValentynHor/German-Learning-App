@@ -47,10 +47,7 @@ export default function BtnWithIconHover(props: BtnWithIconHoverProps) {
         style={{
           backgroundColor:
             active || isHovered ? 'var(--color-bg)' : 'var(--color-bg2)',
-          color:
-            active || isHovered
-              ? 'var(--color-text3)'
-              : 'color: var(--color-bg)',
+          color: active ? 'var(--color-text3)' : '',
         }}
       >
         <img src={isHovered || active ? iconHover : icon} alt={btnName} />
