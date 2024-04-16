@@ -19,10 +19,12 @@ export default function ModalWindow() {
   };
 
   return modalInfo.isOpen ? (
-    <div className={styles.modal}>
-      <div className={styles.modalContent}>
-        <h2 className={styles.title}>{modalInfo.title}</h2>
-        <p className={styles.p}>{modalInfo.text}</p>
+    <div className={styles.modalOverlay}>
+      <div className={styles.modal}>
+        <div>
+          <p>{modalInfo.title}</p>
+          <p>{modalInfo.text}</p>
+        </div>
         <div className={styles.row}>
           <div>
             {modalInfo.confirmButtonText && (
@@ -36,7 +38,7 @@ export default function ModalWindow() {
           </div>
           <div>
             <button className={styles.button} onClick={closeModal}>
-              Close
+              Schließen
             </button>
           </div>
         </div>

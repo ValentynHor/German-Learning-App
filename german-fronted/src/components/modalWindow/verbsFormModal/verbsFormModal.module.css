@@ -18,44 +18,58 @@
   height: 520px;
 }
 
-.modal form {
-  margin-bottom: 20px;
+.inputContainer {
+  display: flex;
+  align-items: center;
+
+  width: 170px;
+  padding: 9px 16px;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-hover);
+  border-radius: 8px;
+}
+.inputContainer label {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: #b0b0b0;
 }
 
-.modal label {
-  display: block;
-  margin-bottom: 8px;
-}
-
-.modal input {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.modal button {
-  padding: 8px 16px;
-  margin-right: 8px;
+.inputContainer input {
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 26px;
+  width: 100%;
+  color: var(--color-text3);
 }
 
-.modal button[type='submit'] {
-  background-color: #007bff; /* Blaue Farbe für Absenden-Button */
-  color: white;
+.inputContainer input:focus {
+  outline: none;
 }
 
-.modal button[type='submit']:hover {
-  background-color: #0056b3; /* Dunklere Farbe für Absenden-Button im Hover-Zustand */
+/* Bilder */
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 170px;
+  padding: 9px 16px;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-hover);
+  border-radius: 8px;
 }
 
-.modal button[type='reset'] {
-  background-color: #ccc; /* Graue Farbe für Abbrechen-Button */
+.imageContainer p {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: #b0b0b0;
 }
 
-.modal button[type='reset']:hover {
-  background-color: #999; /* Dunklere Farbe für Abbrechen-Button im Hover-Zustand */
+.imgPeview {
+  width: 24px;
+  height: 24px;
 }
