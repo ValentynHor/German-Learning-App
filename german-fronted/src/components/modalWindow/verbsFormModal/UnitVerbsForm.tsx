@@ -7,39 +7,45 @@ type UnitVerbsForm = {
 
 type UnitVerbsFormProps = {
   unitName: string;
-  setVerbData: (data: UnitVerbsForm) => void;
-  verbData: UnitVerbsForm;
+  placeholder: string;
+  verbData: UnitVerbsForm[];
+  verbNumber: number;
+  setVerbData: (data: UnitVerbsForm[]) => void;
 };
 
 export default function VerbsFormUnit(props: UnitVerbsFormProps) {
-  const { unitName, setVerbData, verbData } = props;
+  const { unitName, verbNumber, verbData, setVerbData, placeholder } = props;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setVerbData({
-      ...verbData,
+    const updatedVerbData = [...verbData];
+    updatedVerbData[verbNumber] = {
+      ...updatedVerbData[verbNumber],
       [name]: value,
-    });
+    };
+    setVerbData(updatedVerbData);
   };
 
   return (
     <>
       <div className={styles.inputContainer}>
+        <label>{unitName + ' '}</label>
         <input
           type="text"
           name="name"
-          value={verbData.name}
+          value={verbData[verbNumber]?.name || ''}
           onChange={handleChange}
-          placeholder={unitName}
+          placeholder={'   ' + placeholder}
         />
       </div>
       <div className={styles.inputContainer}>
+        <label>{'Stile' + '    '}</label>
         <input
           type="text"
           name="index"
-          value={verbData.index}
+          value={verbData[verbNumber]?.index || ''}
           onChange={handleChange}
-          placeholder="Stile: 1,2,3"
+          placeholder={'   1, 2'}
         />
       </div>
     </>

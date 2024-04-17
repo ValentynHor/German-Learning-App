@@ -11,16 +11,57 @@
 }
 
 .modal {
+  position: relative;
   background-color: white;
-  padding: 24px 43px 24px 43px;
+  padding: 0 15px 0 15px;
   border-radius: 8px;
   width: 892px;
   height: 520px;
 }
 
+.closeIcon {
+  margin: 24px 43px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-around;
+}
+
+.column {
+  margin-right: 25px;
+}
+
+/* **************************************************** */
+/* Scrolling */
+/* **************************************************** */
+.columnWithScrolling {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 30px;
+}
+.columnWithScrolling::-webkit-scrollbar {
+  width: 7px;
+}
+
+.columnWithScrolling::-webkit-scrollbar-thumb {
+  background-color: #dbdbdb;
+  border-radius: 8px;
+}
+
+.columnWithScrolling::-webkit-scrollbar-track {
+  background-color: var(--color-bg);
+}
+
+/* **************************************************** */
+/* Input */
+/* **************************************************** */
+
 .inputContainer {
   display: flex;
   align-items: center;
+
+  margin-bottom: 12px;
 
   width: 170px;
   padding: 9px 16px;
@@ -34,6 +75,7 @@
   font-size: 14px;
   line-height: 22px;
   color: #b0b0b0;
+  margin-right: 2px;
 }
 
 .inputContainer input {
@@ -45,19 +87,23 @@
   color: var(--color-text3);
 }
 
+.inputContainer input::placeholder {
+  color: rgb(224, 213, 213);
+}
+
 .inputContainer input:focus {
   outline: none;
 }
 /* **************************************************** */
-
-/* **************************************************** */
-
 /* Bilder */
+/* **************************************************** */
 
 .imageContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  margin-bottom: 24px;
 
   width: 170px;
   padding: 9px 16px;
@@ -76,4 +122,39 @@
 .imgPeview {
   width: 24px;
   height: 24px;
+}
+
+/* **************************************************** */
+/* Buttons */
+/* **************************************************** */
+.formButtonsContainer {
+  display: flex;
+  justify-content: flex-end;
+
+  position: absolute;
+  bottom: 20px; /* Abstand vom unteren Bildschirmrand */
+  right: 20px;
+}
+
+.formButtonsContainer button {
+  padding: 8px;
+  border-radius: 8px;
+
+  font-family: 'SFProDisplay';
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.confirm {
+  background-color: var(--color-btn);
+  color: var(--color-bg);
+  border: 0;
+}
+
+.abort {
+  margin-right: 8px;
+  background-color: var(--color-bg);
+  color: var(--color-text3);
+  border: 1px solid var(--color-btn);
 }

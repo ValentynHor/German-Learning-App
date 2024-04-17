@@ -3,21 +3,24 @@ import VerbsFormUnit from './UnitVerbsForm';
 import styles from './verbsFormModal.module.css';
 import icon_create from '../../assets/adminPage/icons/icon_create.svg';
 
-type VerbData = {
+type UnitVerbsForm = {
   name: string;
   index: string;
 };
 
 type UnitVerbsFormWithImgProps = {
-  setTempImg: (img: string) => void;
-  setVerbData: (data: VerbData) => void;
-  verbData: VerbData;
+  unitName: string;
+  tempImg: string[];
+  setVerbData: (data: UnitVerbsForm[]) => void;
+  verbData: UnitVerbsForm[];
+  imgNumber: number;
+  placeholder: string;
 };
 
 export default function VerbsFormUnitWithImg(props: UnitVerbsFormWithImgProps) {
-  const { setTempImg, verbData, setVerbData } = props;
+  const { tempImg, verbData, setVerbData, imgNumber, placeholder, unitName } =
+    props;
   const [previewImages, setPreviewImages] = useState<string[]>([]);
-  const [imagePaths, setImagePaths] = useState<string[]>(['']);
 
   const handleFileSelection = (index: number) => (event: any) => {
     const file = event.target.files[0];
@@ -31,12 +34,7 @@ export default function VerbsFormUnitWithImg(props: UnitVerbsFormWithImgProps) {
           newImages[index] = imageDataUrl;
           return newImages;
         });
-        setImagePaths((prevPaths) => {
-          const newPaths = [...prevPaths];
-          newPaths[index] = imagePath;
-          return newPaths;
-        });
-        setTempImg(imagePath);
+        tempImg[imgNumber] = imagePath;
       };
       reader.readAsDataURL(file);
     }
@@ -45,27 +43,29 @@ export default function VerbsFormUnitWithImg(props: UnitVerbsFormWithImgProps) {
   return (
     <>
       <VerbsFormUnit
-        unitName="Verb:"
+        unitName={unitName}
         verbData={verbData}
         setVerbData={setVerbData}
+        verbNumber={imgNumber}
+        placeholder={placeholder}
       />
       <div className={styles.imageContainer}>
-        <p>Bild:</p>
+        <p>Bild</p>
         {previewImages.length > 0 && (
           <img
             className={styles.imgPeview}
-            src={previewImages[0]}
+            src={previewImages[imgNumber]}
             alt="Vorschau"
           />
         )}
         <input
           type="file"
-          id="fileInput0"
+          id={'fileInput' + imgNumber}
           accept=".jpg, .png"
           style={{ display: 'none' }}
-          onChange={handleFileSelection(0)}
+          onChange={handleFileSelection(imgNumber)}
         />
-        <label htmlFor="fileInput0">
+        <label htmlFor={'fileInput' + imgNumber}>
           <img src={icon_create} alt="create" />
         </label>
       </div>
