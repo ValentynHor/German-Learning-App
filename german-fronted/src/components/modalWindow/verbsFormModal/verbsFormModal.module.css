@@ -28,6 +28,7 @@
   border: 1px solid var(--color-hover);
   border-radius: 8px;
 }
+
 .inputContainer label {
   font-weight: 500;
   font-size: 14px;
@@ -47,6 +48,9 @@
 .inputContainer input:focus {
   outline: none;
 }
+/* **************************************************** */
+
+/* **************************************************** */
 
 /* Bilder */
 

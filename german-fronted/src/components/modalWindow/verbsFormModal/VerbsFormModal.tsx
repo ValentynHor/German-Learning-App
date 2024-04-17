@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import styles from './verbsFormModal.module.css';
 import { useModal } from '../confirmModal/ModalContext';
-import icon_create from '../../assets/adminPage/icons/icon_create.svg';
+
+import VerbsFormUnit from './UnitVerbsForm';
+import VerbsFormUnitWithImg from './UnitVerbsFormWithImg';
 
 export default function VerbsFormModal() {
   const [isOpen, setIsOpen] = useState(false);
   const { openModal } = useModal();
-  const [previewImages, setPreviewImages] = useState<string[]>([]);
-  const [imagePaths, setImagePaths] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     name: '',
     isWithHaben: false,
@@ -36,6 +36,13 @@ export default function VerbsFormModal() {
     // part3: { subName: '', index: [] },
   });
 
+  const [tempData0, setTempData0] = useState({
+    name: '',
+    index: '',
+  });
+
+  const [tempImg, setTempImg] = useState<string>('');
+
   const handleChange = (event: any) => {
     const { name, value } = event.target;
     setTempData({
@@ -51,47 +58,33 @@ export default function VerbsFormModal() {
     setIsOpen(false);
   };
 
-  const handleFileSelection = (index: number) => (event: any) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const imageDataUrl = reader.result as string;
-        const imagePath = URL.createObjectURL(file);
-        setPreviewImages((prevImages) => {
-          const newImages = [...prevImages];
-          newImages[index] = imageDataUrl;
-          return newImages;
-        });
-        setImagePaths((prevPaths) => {
-          const newPaths = [...prevPaths];
-          newPaths[index] = imagePath;
-          return newPaths;
-        });
-      };
-      reader.readAsDataURL(file);
-    }
-    console.log('path', imagePaths);
-    console.log(previewImages);
-  };
-
   const handleSubmit = (event: any) => {
     event.preventDefault();
 
-    if (tempData.name.trim() === '') {
+    //VALIDATION
+
+    if (tempData0.name.trim() === '') {
       openModal('Warnung', 'Verb darf nicht leer sein.');
-    } else if (tempData.index.trim() === '') {
+    } else if (tempData0.index.trim() === '') {
       openModal('Warnung', 'Der Verb-Stil darf nicht leer sein.');
-    } else if (!validateInput(tempData.index)) {
+    } else if (!validateInput(tempData0.index)) {
       openModal(
         'Warnung',
         'Der Verb-Stil darf nur Zahlen enthalten, die durch Beistriche getrennt sind.'
       );
+    } else if (tempImg.trim() === '') {
+      openModal('Warnung', 'Das Verbbild darf nicht leer sein.');
     } else {
-      formData.name = tempData.name;
-      formData.index = tempData.index
+      formData.name = tempData0.name;
+
+      if (tempData0.index.endsWith(',')) {
+        tempData0.index = tempData0.index.slice(0, -1);
+      }
+      formData.index = tempData0.index
         .split(',')
         .map((numStr) => parseInt(numStr.trim(), 10) - 1);
+
+      formData.image = tempImg;
 
       console.log(formData);
 
@@ -107,45 +100,11 @@ export default function VerbsFormModal() {
           <div className={styles.modal}>
             <form onSubmit={handleSubmit}>
               <div>
-                <div className={styles.inputContainer}>
-                  <label>Verb:</label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={tempData.name}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className={styles.inputContainer}>
-                  <label>Stil:</label>
-                  <input
-                    type="text"
-                    name="index"
-                    value={tempData.index}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className={styles.imageContainer}>
-                  <p>Bild:</p>
-                  {previewImages.length > 0 && (
-                    <img
-                      className={styles.imgPeview}
-                      src={previewImages[0]}
-                      alt="Vorschau"
-                    />
-                  )}
-
-                  <input
-                    type="file"
-                    id="fileInput0"
-                    accept=".jpg, .png"
-                    style={{ display: 'none' }}
-                    onChange={handleFileSelection(0)}
-                  />
-                  <label htmlFor="fileInput0">
-                    <img src={icon_create} alt="create" />
-                  </label>
-                </div>
+                <VerbsFormUnitWithImg
+                  setTempImg={setTempImg}
+                  setVerbData={setTempData0}
+                  verbData={tempData0}
+                />
               </div>
 
               <div>
