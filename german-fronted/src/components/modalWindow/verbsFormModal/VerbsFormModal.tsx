@@ -9,7 +9,8 @@ export default function VerbsFormModal() {
   const [isOpen, setIsOpen] = useState(false);
   const { openModal } = useModal();
   const [numWords, setNumWords] = useState<number>(1);
-  const [isWithHaben, setIsWithHaben] = useState<boolean>(true);
+  const [isWithSein, setIsWithSein] = useState<boolean>(true);
+  const [isDatenValid, setIsDatenValid] = useState<boolean[]>([false]);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -18,11 +19,11 @@ export default function VerbsFormModal() {
     image: '',
     prefix: {
       prefix: '',
-      prefixIndex: [],
+      prefixIndex: [] as number[],
     },
-    part1: [{ subName: '', index: [] }],
-    part2: [{ subName: '', index: [], image: '' }],
-    part3: { subName: '', index: [] },
+    part1: [{ subName: '', index: [] as number[] }],
+    part2: [{ subName: '', index: [] as number[], image: '' }],
+    part3: { subName: '', index: [] as number[] },
   });
 
   const [tempData, setTempData] = useState([
@@ -43,23 +44,24 @@ export default function VerbsFormModal() {
         tempImg={tempImg}
         setVerbData={setTempData}
         verbData={tempData}
-        imgNumber={6 + i}
+        imgNumber={5 + i}
         placeholder="einen Apfel"
       />
     );
   }
 
-  const handleAddWord = () => {
+  const handleAddUnit = () => {
     setNumWords((prevNumUnits) => prevNumUnits + 1);
   };
-  const handleMinusWord = () => {
+  const handleMinusUnit = () => {
     if (numWords > 1) {
       setNumWords((prevNumUnits) => prevNumUnits - 1);
     }
   };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsWithHaben(event.target.value === 'haben');
+  const handleChangeIsWithHaben = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setIsWithSein(event.target.value === 'haben');
   };
 
   const openModalForm = () => {
@@ -72,37 +74,74 @@ export default function VerbsFormModal() {
   const handleSubmit = (event: any) => {
     event.preventDefault();
 
-    //VALIDATION
-
-    if (tempData[0].name.trim() === '') {
-      openModal('Warnung', 'Verb darf nicht leer sein.');
-    } else if (tempData[0].index.trim() === '') {
-      openModal('Warnung', 'Der Verb-Stil darf nicht leer sein.');
-    } else if (!validateInput(tempData[0].index)) {
-      openModal(
-        'Warnung',
-        'Der Verb-Stil darf nur Zahlen enthalten, die durch Beistriche getrennt sind.'
-      );
-    } else if (tempImg[0].trim() === '') {
-      openModal('Warnung', 'Das Verbbild darf nicht leer sein.');
-    } else {
-      formData.name = tempData[0].name;
-
-      if (tempData[0].index.endsWith(',')) {
-        tempData[0].index = tempData[0].index.slice(0, -1);
+    // VALIDATION;
+    tempData.forEach((item, index) => {
+      if (item && !validateInput(item.index)) {
+        openModal(
+          'Warnung',
+          `Der Verb-Stil für Verb ${
+            index + 1
+          } darf nur Zahlen enthalten, die durch Beistriche getrennt sind.`
+        );
       }
-      formData.index = tempData[0].index
-        .split(',')
-        .map((numStr) => parseInt(numStr.trim(), 10) - 1);
-
-      formData.image = tempImg[0];
-
-      formData.part1[0].subName = tempData[1].name;
-
-      console.log(formData);
-
-      closeModalForm();
+    });
+    if (tempImg.length <= 2) {
+      openModal('Warnung', `Die Bilder dürfen nicht leer sein.`);
     }
+    if (numWords !== 1) {
+      for (let i = 7; i <= numWords + 5; i++) {
+        if (tempImg[i] === undefined) {
+          openModal('Warnung', `Die Bilder dürfen nicht leer sein.`);
+        }
+      }
+    }
+
+    //mainblock
+
+    formData.name = tempData[0].name;
+    formData.index = parseString(tempData[0].index);
+    formData.isWithHaben = isWithSein;
+    formData.image = tempImg[0];
+    if (tempData[1] !== undefined) {
+      formData.prefix = {
+        prefix: tempData[1].name,
+        prefixIndex: parseString(tempData[1].index),
+      };
+    }
+    formData.part1 = [
+      {
+        subName: tempData[2].name,
+        index: parseString(tempData[2].index),
+      },
+      {
+        subName: tempData[3].name,
+        index: parseString(tempData[3].index),
+      },
+      {
+        subName: tempData[4].name,
+        index: parseString(tempData[4].index),
+      },
+    ];
+    formData.part3 = {
+      subName: tempData[5].name,
+      index: parseString(tempData[5].index),
+    };
+    // for (let i = 5; i <= tempData.length; i++) {
+    //   formData.part2.push({
+    //     subName: tempData[i].name,
+    //     index: parseString(tempData[i].index),
+    //     image: tempImg[i - 4],
+    //   });
+    // }
+    // formData.part2 = [
+    //   {
+    //     subName: tempData[6].name,
+    //     index: parseString(tempData[6].index),
+    //     image: tempImg[2],
+    //   },
+    // ];
+
+    console.log(formData);
   };
 
   return (
@@ -129,19 +168,18 @@ export default function VerbsFormModal() {
                       type="radio"
                       name="verbType"
                       value="haben"
-                      checked={isWithHaben}
-                      onChange={handleChange}
+                      checked={isWithSein}
+                      onChange={handleChangeIsWithHaben}
                     />
                     <label>sein</label>
                     <input
                       type="radio"
                       name="verbType"
-                      value="sin"
-                      checked={!isWithHaben}
-                      onChange={handleChange}
+                      value="sein"
+                      checked={!isWithSein}
+                      onChange={handleChangeIsWithHaben}
                     />
                   </div>
-
                   <VerbsFormUnit
                     unitName="Vorsilbe"
                     verbData={tempData}
@@ -175,8 +213,8 @@ export default function VerbsFormModal() {
                 </div>
                 <div className={styles.columnWithScrolling}>
                   {units}
-                  <a onClick={handleAddWord}>+</a>
-                  <a onClick={handleMinusWord}>-</a>
+                  <a onClick={handleAddUnit}>+</a>
+                  <a onClick={handleMinusUnit}>-</a>
                 </div>
                 <div>
                   <VerbsFormUnit
@@ -211,4 +249,15 @@ export default function VerbsFormModal() {
 function validateInput(input: string): boolean {
   const regex = /^[0-9,]+$/;
   return regex.test(input);
+}
+
+function parseString(input: string): number[] {
+  if (!input) return [];
+  if (input.endsWith(',')) {
+    input = input.slice(0, -1);
+  }
+  const parsedNumbers = input
+    .split(',')
+    .map((numStr) => parseInt(numStr.trim(), 10) - 1);
+  return parsedNumbers.filter((num) => !isNaN(num));
 }

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import VerbsFormUnit from './UnitVerbsForm';
 import styles from './verbsFormModal.module.css';
 import icon_create from '../../assets/adminPage/icons/icon_create.svg';
+import { useModal } from '../confirmModal/ModalContext';
 
 type UnitVerbsForm = {
   name: string;
@@ -21,6 +22,7 @@ export default function VerbsFormUnitWithImg(props: UnitVerbsFormWithImgProps) {
   const { tempImg, verbData, setVerbData, imgNumber, placeholder, unitName } =
     props;
   const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const { openModal } = useModal();
 
   const handleFileSelection = (index: number) => (event: any) => {
     const file = event.target.files[0];

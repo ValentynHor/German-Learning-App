@@ -23,6 +23,7 @@ export default function VerbsFormUnit(props: UnitVerbsFormProps) {
       ...updatedVerbData[verbNumber],
       [name]: value,
     };
+    console.log(updatedVerbData);
     setVerbData(updatedVerbData);
   };
 
@@ -36,6 +37,7 @@ export default function VerbsFormUnit(props: UnitVerbsFormProps) {
           value={verbData[verbNumber]?.name || ''}
           onChange={handleChange}
           placeholder={'   ' + placeholder}
+          required={unitName !== 'Vorsilbe'}
         />
       </div>
       <div className={styles.inputContainer}>
@@ -46,6 +48,7 @@ export default function VerbsFormUnit(props: UnitVerbsFormProps) {
           value={verbData[verbNumber]?.index || ''}
           onChange={handleChange}
           placeholder={'   1, 2'}
+          required={unitName !== 'Vorsilbe'}
         />
       </div>
     </>
