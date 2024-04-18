@@ -41,11 +41,11 @@ public class VerbService {
                 entity.getPart3().getIndex() == null){
             throw new EmptyNameException("Value from Part3 can't be null or empty");
         }
-        if (entity.getPrefix() != null &&
-                (StringUtils.isBlank(entity.getPrefix().getPrefix()) ||
-                        entity.getPrefix().getPrefixIndex() == null)) {
-            throw new EmptyNameException("Value from prefix can't be empty");
-        }
+//        if (entity.getPrefix() != null &&
+//                (StringUtils.isBlank(entity.getPrefix().getPrefix()) ||
+//                        entity.getPrefix().getPrefixIndex() == null)) {
+//            throw new EmptyNameException("Value from prefix can't be empty");
+//        }
 
         entity.setId(UUID.randomUUID().toString());
         entity.setCreatedAt(Instant.now());

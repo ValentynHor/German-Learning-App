@@ -4,27 +4,13 @@ import { useModal } from '../confirmModal/ModalContext';
 
 import VerbsFormUnit from './UnitVerbsForm';
 import VerbsFormUnitWithImg from './UnitVerbsFormWithImg';
+import axios from 'axios';
 
 export default function VerbsFormModal() {
   const [isOpen, setIsOpen] = useState(false);
   const { openModal } = useModal();
   const [numWords, setNumWords] = useState<number>(1);
   const [isWithSein, setIsWithSein] = useState<boolean>(true);
-  const [isDatenValid, setIsDatenValid] = useState<boolean[]>([false]);
-
-  const [formData, setFormData] = useState({
-    name: '',
-    isWithHaben: false,
-    index: [] as number[],
-    image: '',
-    prefix: {
-      prefix: '',
-      prefixIndex: [] as number[],
-    },
-    part1: [{ subName: '', index: [] as number[] }],
-    part2: [{ subName: '', index: [] as number[], image: '' }],
-    part3: { subName: '', index: [] as number[] },
-  });
 
   const [tempData, setTempData] = useState([
     {
@@ -33,7 +19,7 @@ export default function VerbsFormModal() {
     },
   ]);
 
-  const [tempImg, setTempImg] = useState<string[]>(['']);
+  const [tempImg] = useState<string[]>(['']);
 
   const units = [];
   for (let i = 1; i <= numWords; i++) {
@@ -73,6 +59,20 @@ export default function VerbsFormModal() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    let hasWarnings = false;
+    const formData = {
+      name: '',
+      isWithHaben: false,
+      index: [] as number[],
+      image: '',
+      prefix: {
+        prefix: '',
+        prefixIndex: [] as number[],
+      },
+      part1: [{ subName: '', index: [] as number[] }],
+      part2: [{ subName: '', index: [] as number[], image: '' }],
+      part3: { subName: '', index: [] as number[] },
+    };
 
     // VALIDATION;
     tempData.forEach((item, index) => {
@@ -83,65 +83,71 @@ export default function VerbsFormModal() {
             index + 1
           } darf nur Zahlen enthalten, die durch Beistriche getrennt sind.`
         );
+        hasWarnings = true;
       }
     });
     if (tempImg.length <= 2) {
       openModal('Warnung', `Die Bilder dürfen nicht leer sein.`);
+      hasWarnings = true;
     }
     if (numWords !== 1) {
       for (let i = 7; i <= numWords + 5; i++) {
         if (tempImg[i] === undefined) {
           openModal('Warnung', `Die Bilder dürfen nicht leer sein.`);
+          hasWarnings = true;
         }
       }
     }
-
     //mainblock
-
-    formData.name = tempData[0].name;
-    formData.index = parseString(tempData[0].index);
-    formData.isWithHaben = isWithSein;
-    formData.image = tempImg[0];
-    if (tempData[1] !== undefined) {
-      formData.prefix = {
-        prefix: tempData[1].name,
-        prefixIndex: parseString(tempData[1].index),
+    if (!hasWarnings) {
+      formData.name = tempData[0].name;
+      formData.index = parseString(tempData[0].index);
+      formData.isWithHaben = isWithSein;
+      formData.image = tempImg[0];
+      if (tempData[1] !== undefined) {
+        formData.prefix = {
+          prefix: tempData[1].name,
+          prefixIndex: parseString(tempData[1].index),
+        };
+      }
+      formData.part1 = [
+        {
+          subName: tempData[2].name,
+          index: parseString(tempData[2].index),
+        },
+        {
+          subName: tempData[3].name,
+          index: parseString(tempData[3].index),
+        },
+        {
+          subName: tempData[4].name,
+          index: parseString(tempData[4].index),
+        },
+      ];
+      formData.part3 = {
+        subName: tempData[5].name,
+        index: parseString(tempData[5].index),
       };
-    }
-    formData.part1 = [
-      {
-        subName: tempData[2].name,
-        index: parseString(tempData[2].index),
-      },
-      {
-        subName: tempData[3].name,
-        index: parseString(tempData[3].index),
-      },
-      {
-        subName: tempData[4].name,
-        index: parseString(tempData[4].index),
-      },
-    ];
-    formData.part3 = {
-      subName: tempData[5].name,
-      index: parseString(tempData[5].index),
-    };
-    // for (let i = 5; i <= tempData.length; i++) {
-    //   formData.part2.push({
-    //     subName: tempData[i].name,
-    //     index: parseString(tempData[i].index),
-    //     image: tempImg[i - 4],
-    //   });
-    // }
-    // formData.part2 = [
-    //   {
-    //     subName: tempData[6].name,
-    //     index: parseString(tempData[6].index),
-    //     image: tempImg[2],
-    //   },
-    // ];
+      formData.part2 = [];
+      for (let i = 6; i < tempData.length; i++) {
+        formData.part2.push({
+          subName: tempData[i].name,
+          index: parseString(tempData[i].index),
+          image: tempImg[i],
+        });
+      }
+      const url = 'http://localhost:8080/german/verbs/create';
 
-    console.log(formData);
+      axios
+        .post(url, formData)
+        .then(() => {})
+        .catch((message) => {
+          openModal(
+            'ERROR',
+            ' *** ' + message.response.data.error_description + ' ***'
+          );
+        });
+    }
   };
 
   return (
