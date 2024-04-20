@@ -5,21 +5,117 @@ import { useModal } from '../confirmModal/ModalContext';
 import VerbsFormUnit from './UnitVerbsForm';
 import VerbsFormUnitWithImg from './UnitVerbsFormWithImg';
 import axios from 'axios';
+import { IVerb } from '../../../data/interfaces';
 
-export default function VerbsFormModal() {
-  const [isOpen, setIsOpen] = useState(false);
+type VerbsFormModalProps = {
+  verb: IVerb;
+  setIsOpen: (e: boolean) => void;
+  setIsUpdate: (e: boolean) => void;
+  isOpen?: boolean;
+  isUpdate?: boolean;
+};
+
+export default function VerbsFormModal(props: VerbsFormModalProps) {
+  const { verb, setIsOpen, isOpen, isUpdate, setIsUpdate } = props;
+
   const { openModal } = useModal();
   const [numWords, setNumWords] = useState<number>(1);
-  const [isWithSein, setIsWithSein] = useState<boolean>(true);
+  // const [isWithSein, setIsWithSein] = useState<boolean>(
+  //   verb ? verb.withHaben : true
+  // );
+  const [tempImg] = useState<string[]>(['']);
 
-  const [tempData, setTempData] = useState([
-    {
+  let a = [];
+  for (let i = 0; i < 10; i++) {
+    a.push({
       name: '',
       index: '',
+    });
+  }
+  let [tempData, setTempData] = useState([...a]);
+  let [newVerb, setNewVerb] = useState<IVerb>({
+    name: '',
+    withHaben: true,
+    index: '',
+    prefix: {
+      prefix: '',
+      prefixIndex: '',
     },
-  ]);
+    image: '',
+    part1: [
+      {
+        subName: '',
+        index: '',
+      },
+      {
+        subName: '',
+        index: '',
+      },
+      {
+        subName: '',
+        index: '',
+      },
+    ],
+    part2: [
+      {
+        subName: '',
+        index: '',
+        image: '',
+      },
+    ],
+    part3: { subName: '', index: '' },
+  });
 
-  const [tempImg] = useState<string[]>(['']);
+  let [tempData2, setTempData2] = useState({
+    ...verb,
+  });
+  let [updatedVerb, setUpdatedVerb] = useState({
+    ...verb,
+  });
+  if (isUpdate && verb) {
+  }
+  // if (isUpdate && verb) {
+  //   let updatedVerb = { ...verb };
+  //   updatedVerb.image = JSON.parse(updatedVerb.image);
+  //   updatedVerb.part2 = verb.part2.map((i) => {
+  //     let updatedPart2Item = { ...i };
+  //     updatedPart2Item.image = JSON.parse(updatedPart2Item.image as string);
+  //     return updatedPart2Item;
+  //   });
+
+  //   tempData[0] = {
+  //     name: updatedVerb.name,
+  //     index: updatedVerb.index.join(','),
+  //   };
+  //   if (updatedVerb.prefix) {
+  //     tempData[1] = {
+  //       name: updatedVerb.prefix.prefix,
+  //       index: updatedVerb.prefix.prefixIndex.join(','),
+  //     };
+  //   }
+  //   for (let i = 0; i < updatedVerb.part1.length; i++) {
+  //     tempData[i + 2] = {
+  //       name: updatedVerb.part1[i].subName,
+  //       index: updatedVerb.part1[i].index.join(','),
+  //     };
+  //   }
+  //   tempData[5] = {
+  //     name: updatedVerb.part3.subName,
+  //     index: updatedVerb.part3.index.join(','),
+  //   };
+  //   updatedVerb.part2.map((item, index) => {
+  //     tempData[6 + index] = {
+  //       name: item.subName,
+  //       index: item.index.join(','),
+  //     };
+  //     index++;
+  //   });
+  //   tempImg[0] = updatedVerb.image;
+  //   updatedVerb.part2.map((item, index) => {
+  //     if (item.image) tempImg[index + 6] = item.image;
+  //   });
+  //   setIsUpdate(false);
+  // }
 
   const units = [];
   for (let i = 1; i <= numWords; i++) {
@@ -32,6 +128,12 @@ export default function VerbsFormModal() {
         verbData={tempData}
         imgNumber={5 + i}
         placeholder="einen Apfel"
+        isUpdate={isUpdate}
+        verb={verb}
+        setNewVerb={setNewVerb}
+        setUpdatedVerb={setUpdatedVerb}
+        newVerb={newVerb}
+        updatedVerb={updatedVerb}
       />
     );
   }
@@ -47,7 +149,7 @@ export default function VerbsFormModal() {
   const handleChangeIsWithHaben = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setIsWithSein(event.target.value === 'haben');
+    // setIsWithSein(event.target.value === 'haben');
   };
 
   const openModalForm = () => {
@@ -60,19 +162,7 @@ export default function VerbsFormModal() {
   const handleSubmit = (event: any) => {
     event.preventDefault();
     let hasWarnings = false;
-    const formData = {
-      name: '',
-      isWithHaben: false,
-      index: [] as number[],
-      image: '',
-      prefix: {
-        prefix: '',
-        prefixIndex: [] as number[],
-      },
-      part1: [{ subName: '', index: [] as number[] }],
-      part2: [{ subName: '', index: [] as number[], image: '' }],
-      part3: { subName: '', index: [] as number[] },
-    };
+    const formData = verb;
 
     // VALIDATION;
     tempData.forEach((item, index) => {
@@ -84,25 +174,32 @@ export default function VerbsFormModal() {
           } darf nur Zahlen enthalten, die durch Beistriche getrennt sind.`
         );
         hasWarnings = true;
+        setIsUpdate(true);
       }
     });
-    if (tempImg.length <= 2) {
-      openModal('Warnung', `Die Bilder dürfen nicht leer sein.`);
-      hasWarnings = true;
+    if (verb === undefined) {
+      if (tempImg.length <= 2) {
+        openModal('Warnung', `Die Bilder dürfen nicht leer sein.`);
+        hasWarnings = true;
+        setIsUpdate(true);
+      }
     }
     if (numWords !== 1) {
       for (let i = 7; i <= numWords + 5; i++) {
-        if (tempImg[i] === undefined) {
-          openModal('Warnung', `Die Bilder dürfen nicht leer sein.`);
-          hasWarnings = true;
+        if (verb === undefined) {
+          if (tempImg[i] === undefined) {
+            openModal('Warnung', `Die Bilder dürfen nicht leer sein.`);
+            hasWarnings = true;
+            setIsUpdate(true);
+          }
         }
       }
     }
     //mainblock
-    if (!hasWarnings) {
+    if (!hasWarnings && formData && !isUpdate) {
       formData.name = tempData[0].name;
       formData.index = parseString(tempData[0].index);
-      formData.isWithHaben = isWithSein;
+      // formData.withHaben = isWithSein;
       formData.image = tempImg[0];
       if (tempData[1] !== undefined) {
         formData.prefix = {
@@ -136,23 +233,36 @@ export default function VerbsFormModal() {
           image: tempImg[i],
         });
       }
-      const url = 'http://localhost:8080/german/verbs/create';
-
-      axios
-        .post(url, formData)
-        .then(() => {})
-        .catch((message) => {
-          openModal(
-            'ERROR',
-            ' *** ' + message.response.data.error_description + ' ***'
-          );
-        });
+      if (isUpdate) {
+        const url = 'http://localhost:8080/german/verbs/create';
+        axios
+          .post(url, formData)
+          .then(() => {})
+          .catch((message) => {
+            openModal(
+              'ERROR',
+              ' *** ' + message.response.data.error_description + ' ***'
+            );
+          });
+        closeModalForm();
+      } else {
+        const url = 'http://localhost:8080/german/verbs/update/' + verb.id;
+        axios
+          .post(url, formData)
+          .then(() => {})
+          .catch((message) => {
+            openModal(
+              'ERROR',
+              ' *** ' + message.response.data.error_description + ' ***'
+            );
+          });
+        closeModalForm();
+      }
     }
   };
 
   return (
     <>
-      <button onClick={openModalForm}>Formular öffnen</button>
       {isOpen && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
@@ -167,6 +277,8 @@ export default function VerbsFormModal() {
                     verbData={tempData}
                     imgNumber={0}
                     placeholder="essen"
+                    isUpdate={isUpdate}
+                    verb={verb}
                   />
                   <div className={styles.inputContainer}>
                     <label>haben</label>
@@ -174,7 +286,7 @@ export default function VerbsFormModal() {
                       type="radio"
                       name="verbType"
                       value="haben"
-                      checked={isWithSein}
+                      // checked={isWithSein}
                       onChange={handleChangeIsWithHaben}
                     />
                     <label>sein</label>
@@ -182,7 +294,7 @@ export default function VerbsFormModal() {
                       type="radio"
                       name="verbType"
                       value="sein"
-                      checked={!isWithSein}
+                      // checked={!isWithSein}
                       onChange={handleChangeIsWithHaben}
                     />
                   </div>
@@ -192,6 +304,22 @@ export default function VerbsFormModal() {
                     verbNumber={1}
                     setVerbData={setTempData}
                     placeholder="über"
+                    isUpdate={isUpdate}
+                    verb={verb}
+                    valueName={
+                      isUpdate
+                        ? updatedVerb.prefix?.prefix
+                        : newVerb.prefix?.prefix
+                    }
+                    valueIndex={
+                      isUpdate
+                        ? updatedVerb.prefix?.prefixIndex
+                        : newVerb.prefix?.prefixIndex
+                    }
+                    setNewVerb={setNewVerb}
+                    setUpdatedVerb={setUpdatedVerb}
+                    newVerb={newVerb}
+                    updatedVerb={updatedVerb}
                   />
                 </div>
                 <div className={styles.column}>
@@ -201,6 +329,22 @@ export default function VerbsFormModal() {
                     verbNumber={2}
                     setVerbData={setTempData}
                     placeholder="esse"
+                    isUpdate={isUpdate}
+                    verb={verb}
+                    valueName={
+                      isUpdate
+                        ? updatedVerb.part1[0].subName
+                        : newVerb.part1[0].subName
+                    }
+                    valueIndex={
+                      isUpdate
+                        ? updatedVerb.part1[0].index
+                        : newVerb.part1[0].index
+                    }
+                    setNewVerb={setNewVerb}
+                    setUpdatedVerb={setUpdatedVerb}
+                    newVerb={newVerb}
+                    updatedVerb={updatedVerb}
                   />
                   <VerbsFormUnit
                     unitName="3.S "
@@ -208,6 +352,22 @@ export default function VerbsFormModal() {
                     verbNumber={3}
                     setVerbData={setTempData}
                     placeholder="isst"
+                    isUpdate={isUpdate}
+                    verb={verb}
+                    valueName={
+                      isUpdate
+                        ? updatedVerb.part1[1].subName
+                        : newVerb.part1[1].subName
+                    }
+                    valueIndex={
+                      isUpdate
+                        ? updatedVerb.part1[1].index
+                        : newVerb.part1[1].index
+                    }
+                    setNewVerb={setNewVerb}
+                    setUpdatedVerb={setUpdatedVerb}
+                    newVerb={newVerb}
+                    updatedVerb={updatedVerb}
                   />
                   <VerbsFormUnit
                     unitName="1.P "
@@ -215,6 +375,22 @@ export default function VerbsFormModal() {
                     verbNumber={4}
                     setVerbData={setTempData}
                     placeholder="essen"
+                    isUpdate={isUpdate}
+                    verb={verb}
+                    valueName={
+                      isUpdate
+                        ? updatedVerb.part1[2].subName
+                        : newVerb.part1[2].subName
+                    }
+                    valueIndex={
+                      isUpdate
+                        ? updatedVerb.part1[2].index
+                        : newVerb.part1[2].index
+                    }
+                    setNewVerb={setNewVerb}
+                    setUpdatedVerb={setUpdatedVerb}
+                    newVerb={newVerb}
+                    updatedVerb={updatedVerb}
                   />
                 </div>
                 <div className={styles.columnWithScrolling}>
@@ -224,11 +400,26 @@ export default function VerbsFormModal() {
                 </div>
                 <div>
                   <VerbsFormUnit
-                    unitName="PII"
+                    unitName="PII "
                     verbData={tempData}
                     verbNumber={5}
                     setVerbData={setTempData}
+                    isUpdate={isUpdate}
                     placeholder="gegessen"
+                    verb={verb}
+                    valueName={
+                      isUpdate
+                        ? updatedVerb.part3.subName
+                        : newVerb.part3.subName
+                    }
+                    valueIndex={
+                      isUpdate ? updatedVerb.part3.index : newVerb.part3.index
+                    }
+                    setTempData2={setTempData2}
+                    setNewVerb={setNewVerb}
+                    setUpdatedVerb={setUpdatedVerb}
+                    newVerb={newVerb}
+                    updatedVerb={updatedVerb}
                   />
                 </div>
               </div>
@@ -257,7 +448,7 @@ function validateInput(input: string): boolean {
   return regex.test(input);
 }
 
-function parseString(input: string): number[] {
+export function parseString(input: string): number[] {
   if (!input) return [];
   if (input.endsWith(',')) {
     input = input.slice(0, -1);

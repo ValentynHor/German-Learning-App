@@ -29,8 +29,7 @@ public class VerbEntity {
     @NotNull(message = "Index arr can't be null")
     private List<Integer> index;
 
-    @NotBlank(message = "image can't be null or empty")
-    private String image;
+    private String  image;
 
     private boolean isWithHaben;
 

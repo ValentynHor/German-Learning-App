@@ -1,17 +1,31 @@
+import { IVerb } from '../../../../data/interfaces';
 import { useModal } from '../../../modalWindow/confirmModal/ModalContext';
+import VerbsFormModal from '../../../modalWindow/verbsFormModal/VerbsFormModal';
 import styles from './btnAdminEditing.module.css';
 import { useState } from 'react';
 
 type BtnAdminEditingProps = {
-  name: string;
+  verbName: string;
+  verbId: string | undefined;
   iconEdit: string;
   iconEditHover: string;
   iconDelete: string;
   iconDeleteHover: string;
+  setIsOpen: (e: boolean) => void;
+  setIsUpdate: (data: boolean) => void;
 };
 
 export default function BtnAdminEditing(props: BtnAdminEditingProps) {
-  const { name, iconEdit, iconEditHover, iconDelete, iconDeleteHover } = props;
+  const {
+    verbName,
+    verbId,
+    iconEdit,
+    iconEditHover,
+    iconDelete,
+    iconDeleteHover,
+    setIsOpen,
+    setIsUpdate,
+  } = props;
   const [isHovered, setIsHovered] = useState(false);
   const [isHovered2, setIsHovered2] = useState(false);
   const { openModal } = useModal();
@@ -29,30 +43,31 @@ export default function BtnAdminEditing(props: BtnAdminEditingProps) {
     setIsHovered2(false);
   };
 
-  const handleEdit = (id: string) => {
-    console.log('Editing:', id);
+  const handleEdit = () => {
+    setIsUpdate(true);
+    setIsOpen(true);
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (id: string | undefined) => {
     console.log('Deleting:', id);
     openModal('Warnung', 'Verb ' + id + ' wird gelöscht', 'Bestätigen');
   };
 
   return (
     <div className={styles.adminEditingButton}>
-      <span>{name}</span>
+      <span>{verbName}</span>
       <div className={styles.icons}>
         <button
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
-          onClick={() => handleEdit(name)}
+          onClick={handleEdit}
         >
           <img src={isHovered ? iconEditHover : iconEdit} alt="edit" />
         </button>
         <button
           onMouseOver={handleMouseOver2}
           onMouseOut={handleMouseOut2}
-          onClick={() => handleDelete(name)}
+          onClick={() => handleDelete(verbId)}
         >
           <img src={isHovered2 ? iconDeleteHover : iconDelete} alt="delete" />
         </button>

@@ -12,5 +12,5 @@ import lombok.Setter;
 @Setter
 public class PartEntityWithImg extends  PartEntity{
 
-    private String image;
+    private String  image;
 }

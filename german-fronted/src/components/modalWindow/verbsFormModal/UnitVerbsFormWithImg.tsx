@@ -3,10 +3,12 @@ import VerbsFormUnit from './UnitVerbsForm';
 import styles from './verbsFormModal.module.css';
 import icon_create from '../../assets/adminPage/icons/icon_create.svg';
 import { useModal } from '../confirmModal/ModalContext';
+import { IVerb } from '../../../data/interfaces';
 
 type UnitVerbsForm = {
   name: string;
   index: string;
+  image?: string;
 };
 
 type UnitVerbsFormWithImgProps = {
@@ -16,29 +18,87 @@ type UnitVerbsFormWithImgProps = {
   verbData: UnitVerbsForm[];
   imgNumber: number;
   placeholder: string;
+  isUpdate?: boolean;
+  verb?: IVerb;
+  setNewVerb?: (data: any) => void;
+  setUpdatedVerb?: (data: any) => void;
+  newVerb?: any;
+  updatedVerb?: any;
 };
 
 export default function VerbsFormUnitWithImg(props: UnitVerbsFormWithImgProps) {
-  const { tempImg, verbData, setVerbData, imgNumber, placeholder, unitName } =
-    props;
-  const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const {
+    tempImg,
+    verbData,
+    setVerbData,
+    imgNumber,
+    placeholder,
+    unitName,
+    isUpdate,
+    setNewVerb,
+    setUpdatedVerb,
+    updatedVerb,
+    newVerb,
+  } = props;
+  let [previewImages, setPreviewImages] = useState<string[]>([]);
   const { openModal } = useModal();
 
-  const handleFileSelection = (index: number) => (event: any) => {
+  // if (verb !== undefined) {
+  //   let a = verb.image;
+  //   try {
+  //     previewImages[0] = JSON.parse(a);
+  //     verb.part2.map((item, index) => {
+  //       if (item.image) previewImages[index + 6] = JSON.parse(item.image);
+  //     });
+  //   } catch (error) {
+  //     // Wenn ein Fehler auftritt, ist es kein gültiges JSON
+  //     console.error('Fehler beim Parsen des JSON:', error);
+  //   }
+  // }
+  const handleFileSelection = (index: number, event: any) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
+
       reader.onload = () => {
+        if (reader.result) {
+          // Stelle sicher, dass reader.result nicht null ist
+          const imageBlob = new Blob([reader.result], { type: file.type });
+
+          const imageDataUrl = reader.result as string;
+          setPreviewImages((prevImages) => {
+            const newImages = [...prevImages];
+            newImages[index] = imageDataUrl;
+            return newImages;
+          });
+          tempImg[imgNumber] = JSON.stringify({
+            name: `image_${index}`,
+            blob: imageBlob,
+            fileName: file.name,
+          });
+        } else {
+          console.error('Failed to read file');
+        }
+      };
+
+      reader.readAsArrayBuffer(file);
+    }
+  };
+  const readFileOnUpload = (index: number, e: any) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        tempImg[index] = JSON.stringify(reader.result);
         const imageDataUrl = reader.result as string;
-        const imagePath = URL.createObjectURL(file);
         setPreviewImages((prevImages) => {
           const newImages = [...prevImages];
           newImages[index] = imageDataUrl;
           return newImages;
         });
-        tempImg[imgNumber] = imagePath;
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); // Lese die Datei als Daten-URL ein
     }
   };
 
@@ -50,6 +110,11 @@ export default function VerbsFormUnitWithImg(props: UnitVerbsFormWithImgProps) {
         setVerbData={setVerbData}
         verbNumber={imgNumber}
         placeholder={placeholder}
+        isUpdate={isUpdate}
+        setNewVerb={setNewVerb}
+        setUpdatedVerb={setUpdatedVerb}
+        newVerb={newVerb}
+        updatedVerb={updatedVerb}
       />
       <div className={styles.imageContainer}>
         <p>Bild</p>
@@ -65,7 +130,7 @@ export default function VerbsFormUnitWithImg(props: UnitVerbsFormWithImgProps) {
           id={'fileInput' + imgNumber}
           accept=".jpg, .png"
           style={{ display: 'none' }}
-          onChange={handleFileSelection(imgNumber)}
+          onChange={(e) => readFileOnUpload(imgNumber, e)}
         />
         <label htmlFor={'fileInput' + imgNumber}>
           <img src={icon_create} alt="create" />

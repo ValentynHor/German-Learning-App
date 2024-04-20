@@ -1,5 +1,5 @@
 import styles from './showVerb.module.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import NavigationButton from '../../navBtn/NavigationButton';
 import { pronouns } from '../../../data/verbs';
 import { sentsWithHaben } from '../../../data/verbs';
@@ -16,7 +16,6 @@ interface ShowVerbProps {
 export default function ShowVerb(props: ShowVerbProps) {
   const verb = props.verb;
   const name = verb.name;
-  const count = verb.part2.length;
   const [part1Ind, setPart1Ind] = useState<number>(0);
   const [part2Ind, setPart2Ind] = useState<number>(0);
   const [showMenu0, setShowMenu0] = useState<boolean>(true);
@@ -25,27 +24,11 @@ export default function ShowVerb(props: ShowVerbProps) {
   const [showMenu3, setShowMenu3] = useState<boolean>(false);
 
   //Images loading
-  const [images, setImages] = useState<(string | undefined)[]>(
-    Array.from({ length: count }, () => null) as any[]
-  );
-  useEffect(() => {
-    const loadImages = async () => {
-      try {
-        const loadedImages = await Promise.all(
-          Array.from({ length: count + 1 }, async (_, i) => {
-            const { default: imgSrc } = await import(
-              `./verbs/${name}/${name}${i}.jpg`
-            );
-            return imgSrc;
-          })
-        );
-        setImages(loadedImages);
-      } catch (error) {
-        console.error('Error loading images:', error);
-      }
-    };
-    loadImages();
-  }, [name, count]);
+  const imageUrls = verb.part2.map((item) => {
+    if (typeof item.image === 'string') {
+      return JSON.parse(item.image);
+    }
+  });
 
   //Verrotet Buchstaben
   const renderStyledWord = (name: string, arr: number[]) => {
@@ -102,8 +85,8 @@ export default function ShowVerb(props: ShowVerbProps) {
       {showMenu0 && (
         <>
           <div className={styles.part}>
-            <h3>{renderStyledWord(name, verb.index)}</h3>
-            <img src={images[0]} alt={`${name}`} />
+            <h3>{renderStyledWord(name, verb.index as number[])}</h3>
+            <img src={JSON.parse(verb.image)} alt={`${name}`} />
           </div>
           <NavigationButton
             onClickBack={handleClickToVerbsMenu}
@@ -120,14 +103,14 @@ export default function ShowVerb(props: ShowVerbProps) {
               <h3>
                 {renderStyledWord(
                   verb.part1[part1Ind].subName,
-                  verb.part1[part1Ind].index
+                  verb.part1[part1Ind].index as number[]
                 )}
               </h3>
               {verb.prefix && (
                 <h3>
                   {renderStyledWord(
                     verb.prefix!.prefix,
-                    verb.prefix!.prefixIndex
+                    verb.prefix!.prefixIndex as number[]
                   )}
                 </h3>
               )}
@@ -149,7 +132,7 @@ export default function ShowVerb(props: ShowVerbProps) {
                 <span> </span>
                 {renderStyledWord(
                   verb.part1[part1Ind].subName,
-                  verb.part1[part1Ind].index
+                  verb.part1[part1Ind].index as number[]
                 )}
               </h3>
             </button>
@@ -157,19 +140,19 @@ export default function ShowVerb(props: ShowVerbProps) {
               <h3>
                 {renderStyledWord(
                   verb.part2[part2Ind].subName,
-                  verb.part2[part2Ind].index
+                  verb.part2[part2Ind].index as number[]
                 )}
                 <span> </span>
                 {verb.prefix && (
                   <>
                     {renderStyledWord(
                       verb.prefix!.prefix,
-                      verb.prefix!.prefixIndex
+                      verb.prefix!.prefixIndex as number[]
                     )}
                   </>
                 )}
               </h3>
-              <img src={images[part2Ind + 1]} alt={`${name}`} />
+              <img src={imageUrls[part2Ind]} alt={`${name}`} />
             </button>
           </div>
           <NavigationButton
@@ -186,7 +169,7 @@ export default function ShowVerb(props: ShowVerbProps) {
               <h3>
                 {pronouns[part1Ind]}
                 <span> </span>
-                {verb.isWithHaben
+                {verb.withHaben
                   ? renderStyledWord(
                       sentsWithHaben[part1Ind].name,
                       sentsWithHaben[part1Ind].index
@@ -198,9 +181,14 @@ export default function ShowVerb(props: ShowVerbProps) {
               </h3>
             </button>
             <button onClick={handleBtnPart2}>
-              <img src={images[part2Ind + 1]} alt={`${name}`} />
+              <img src={imageUrls[part2Ind]} alt={`${name}`} />
             </button>
-            <h3>{renderStyledWord(verb.part3.subName, verb.part3.index)}</h3>
+            <h3>
+              {renderStyledWord(
+                verb.part3.subName,
+                verb.part3.index as number[]
+              )}
+            </h3>
           </div>
           <NavigationButton
             onClickBack={handleClickToMenu2}

@@ -5,19 +5,20 @@ export interface IMessage {
 
 type Prefix = {
   prefix: string;
-  prefixIndex: number[];
+  prefixIndex: number[] | string;
 };
 
-type Part = {
+export type Part = {
   subName: string;
-  index: number[];
-  image?: string;
+  index: number[] | string;
+  image?: string | undefined;
 };
 
 export interface IVerb {
+  id?: string;
   name: string;
-  index: number[];
-  isWithHaben: boolean;
+  index: number[] | string;
+  withHaben: boolean;
   prefix: null | Prefix;
   image: string;
   part1: Part[];
