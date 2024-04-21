@@ -39,8 +39,7 @@ export default function VerbsFormUnit(props: UnitVerbsFormProps) {
     setUpdatedVerb,
     newVerb,
   } = props;
-  let { unitName } = props;
-  let { valueName, valueIndex } = props;
+  let { unitName, valueName, valueIndex } = props;
 
   const handleChangeName = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -48,8 +47,6 @@ export default function VerbsFormUnit(props: UnitVerbsFormProps) {
   ) => {
     let newUpdatedVerb = { ...updatedVerb };
     let newNewVerb = { ...newVerb };
-    let partName;
-
     switch (unitName) {
       case 'PII ': {
         const part3 = { ...newUpdatedVerb.part3 };

@@ -37,57 +37,74 @@ export default function AdminEditing() {
   };
 
   return (
-    <div className={styles.mainContainer}>
-      <div className={styles.mainMaterialsContainer}>
-        {data.map((item) => (
-          <button
-            key={item}
-            // className={styles.mainMaterial}
-            className={`${styles.mainMaterial} ${
-              activeButton === item ? styles.active : ''
-            }`}
-            onClick={() => handleOnClick(item)}
-          >
-            <span>{item}</span>
-            <span>&gt;</span>
-          </button>
-        ))}
-      </div>
-      {activeButton === 'Verben' && (
-        <>
-          <div className={styles.subMaterials}>
-            {verbs && (
-              <div>
-                {verbs!.map((item) => (
-                  <div key={item.name}>
-                    <BtnAdminEditing
-                      verbName={item.name}
-                      verbId={item.id}
-                      iconEdit={iconEdit}
-                      iconEditHover={iconEditHover}
-                      iconDelete={iconDelete}
-                      iconDeleteHover={iconDeleteHover}
-                      setIsOpen={setIsOpen}
-                      setIsUpdate={setIsUpdate}
-                    />
-                    {isOpen && (
-                      <VerbsFormModal
-                        key={item.name}
-                        setIsOpen={setIsOpen}
-                        isOpen={isOpen}
-                        verb={item}
-                        isUpdate={isUpdate}
-                        setIsUpdate={setIsUpdate}
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-          <button onClick={openModal}>Formular öffnen</button>
-        </>
+    <>
+      {error && (
+        <p>
+          {error.message} from {error.config.url}
+        </p>
       )}
-    </div>
+      {!verbs ? (
+        <div>
+          <p>...loading...</p>
+        </div>
+      ) : verbs.length === 0 ? (
+        <div>
+          <p>Liste ist leer</p>
+        </div>
+      ) : (
+        <div className={styles.mainContainer}>
+          <div className={styles.mainMaterialsContainer}>
+            {data.map((item) => (
+              <button
+                key={item}
+                // className={styles.mainMaterial}
+                className={`${styles.mainMaterial} ${
+                  activeButton === item ? styles.active : ''
+                }`}
+                onClick={() => handleOnClick(item)}
+              >
+                <span>{item}</span>
+                <span>&gt;</span>
+              </button>
+            ))}
+          </div>
+          {activeButton === 'Verben' && (
+            <>
+              <div className={styles.subMaterials}>
+                <button onClick={openModal}>Verb erstellen</button>
+                {verbs && (
+                  <div>
+                    {verbs!.map((item) => (
+                      <div key={item.name}>
+                        <BtnAdminEditing
+                          verbName={item.name}
+                          verbId={item.id}
+                          iconEdit={iconEdit}
+                          iconEditHover={iconEditHover}
+                          iconDelete={iconDelete}
+                          iconDeleteHover={iconDeleteHover}
+                          setIsOpen={setIsOpen}
+                          setIsUpdate={setIsUpdate}
+                        />
+                        {isOpen && (
+                          <VerbsFormModal
+                            key={item.name}
+                            setIsOpen={setIsOpen}
+                            isOpen={isOpen}
+                            verb={item}
+                            isUpdate={isUpdate}
+                            setIsUpdate={setIsUpdate}
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+        </div>
+      )}
+    </>
   );
 }
