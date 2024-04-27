@@ -1,25 +1,32 @@
 import styles from './adminEtiting.module.css';
-// import { verbs } from '../../../data/verbs';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import iconEdit from '../../assets/adminPage/icons/icon_edit.svg';
 import iconEditHover from '../../assets/adminPage/icons/icon_editHover.svg';
 import iconDelete from '../../assets/adminPage/icons/icon_delete.svg';
 import iconDeleteHover from '../../assets/adminPage/icons/icon_deleteHover.svg';
-import BtnAdminEditing from './btnAdminEditing/BtnAdminEditing';
-import VerbsFormModal from '../../modalWindow/verbsFormModal/VerbsFormModal';
+import iconCreate from '../../assets/adminPage/icons/icon_create.svg';
+import iconCreateHover from '../../assets/adminPage/icons/icon_createHover.svg';
+import VerbsEditing from './verbsEditing/VerbsEditing';
 import useGetData from '../../hooks/useGetData';
-import { IVerb } from '../../../data/interfaces';
+import { IEditingIcons, IVerb } from '../../../data/interfaces';
 
 const data = ['Pronomen', 'Verben beugen', 'Verben', 'Nomen', 'Adjektive'];
 
 export default function AdminEditing() {
   let verbs: IVerb[] | undefined;
   let error: any;
-  const [isOpen, setIsOpen] = useState(false);
+  const icons: IEditingIcons = {
+    iconEdit,
+    iconEditHover,
+    iconDelete,
+    iconDeleteHover,
+    iconCreate,
+    iconCreateHover,
+  };
 
   const [activeButton, setActiveButton] = useState<string>('');
-  const [isUpdate, setIsUpdate] = useState(false);
+
   const dataResponse = useGetData('http://localhost:8080/german/verbs/list');
 
   if (dataResponse && dataResponse.status === 'success') {
@@ -30,10 +37,6 @@ export default function AdminEditing() {
 
   const handleOnClick = (name: string) => {
     setActiveButton(name);
-  };
-  const openModal = () => {
-    setIsUpdate(false);
-    setIsOpen(true);
   };
 
   return (
@@ -57,7 +60,6 @@ export default function AdminEditing() {
             {data.map((item) => (
               <button
                 key={item}
-                // className={styles.mainMaterial}
                 className={`${styles.mainMaterial} ${
                   activeButton === item ? styles.active : ''
                 }`}
@@ -71,31 +73,11 @@ export default function AdminEditing() {
           {activeButton === 'Verben' && (
             <>
               <div className={styles.subMaterials}>
-                <button onClick={openModal}>Verb erstellen</button>
                 {verbs && (
                   <div>
                     {verbs!.map((item) => (
                       <div key={item.name}>
-                        <BtnAdminEditing
-                          verbName={item.name}
-                          verbId={item.id}
-                          iconEdit={iconEdit}
-                          iconEditHover={iconEditHover}
-                          iconDelete={iconDelete}
-                          iconDeleteHover={iconDeleteHover}
-                          setIsOpen={setIsOpen}
-                          setIsUpdate={setIsUpdate}
-                        />
-                        {isOpen && (
-                          <VerbsFormModal
-                            key={item.name}
-                            setIsOpen={setIsOpen}
-                            isOpen={isOpen}
-                            verb={item}
-                            isUpdate={isUpdate}
-                            setIsUpdate={setIsUpdate}
-                          />
-                        )}
+                        <VerbsEditing verb={item} icons={icons} />
                       </div>
                     ))}
                   </div>

@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './verbsFormModal.module.css';
-import { useModal } from '../confirmModal/ModalContext';
+import { useModal } from '../../../modalWindow/confirmModal/ModalContext';
 
 import VerbsFormUnit from './UnitVerbsForm';
 import VerbsFormUnitWithImg from './UnitVerbsFormWithImg';
 import axios from 'axios';
-import { IVerb } from '../../../data/interfaces';
+import { IVerb, Part } from '../../../../data/interfaces';
 
 type VerbsFormModalProps = {
   verb: IVerb;
@@ -18,8 +18,22 @@ type VerbsFormModalProps = {
 export default function VerbsFormModal(props: VerbsFormModalProps) {
   const { verb, setIsOpen, isOpen, isUpdate, setIsUpdate } = props;
 
+  const [part2, setPart2] = useState<Part[]>(
+    isUpdate
+      ? verb.part2
+      : [
+          {
+            subName: '',
+            index: '',
+            image: '',
+          },
+        ]
+  );
+
   const { openModal } = useModal();
-  const [numWords, setNumWords] = useState<number>(1);
+  const [numWords, setNumWords] = useState<number>(
+    isUpdate ? verb.part2.length : 1
+  );
   // const [isWithSein, setIsWithSein] = useState<boolean>(
   //   verb ? verb.withHaben : true
   // );
@@ -33,7 +47,8 @@ export default function VerbsFormModal(props: VerbsFormModalProps) {
     });
   }
   let [tempData, setTempData] = useState([...a]);
-  let [newVerb, setNewVerb] = useState<IVerb>({
+
+  const [newVerb, setNewVerb] = useState<IVerb>({
     name: '',
     withHaben: true,
     index: '',
@@ -56,77 +71,27 @@ export default function VerbsFormModal(props: VerbsFormModalProps) {
         index: '',
       },
     ],
-    part2: [
-      {
-        subName: '',
-        index: '',
-        image: '',
-      },
-    ],
+    part2: [],
     part3: { subName: '', index: '' },
   });
 
-  let [tempData2, setTempData2] = useState({
-    ...verb,
-  });
   let [updatedVerb, setUpdatedVerb] = useState({
     ...verb,
   });
-  if (isUpdate && verb) {
-  }
-  // if (isUpdate && verb) {
-  //   let updatedVerb = { ...verb };
-  //   updatedVerb.image = JSON.parse(updatedVerb.image);
-  //   updatedVerb.part2 = verb.part2.map((i) => {
-  //     let updatedPart2Item = { ...i };
-  //     updatedPart2Item.image = JSON.parse(updatedPart2Item.image as string);
-  //     return updatedPart2Item;
-  //   });
+  let [tempData2, setTempData2] = useState({
+    ...verb,
+  });
+  const [units, setUnits]: any = useState([]);
 
-  //   tempData[0] = {
-  //     name: updatedVerb.name,
-  //     index: updatedVerb.index.join(','),
-  //   };
-  //   if (updatedVerb.prefix) {
-  //     tempData[1] = {
-  //       name: updatedVerb.prefix.prefix,
-  //       index: updatedVerb.prefix.prefixIndex.join(','),
-  //     };
-  //   }
-  //   for (let i = 0; i < updatedVerb.part1.length; i++) {
-  //     tempData[i + 2] = {
-  //       name: updatedVerb.part1[i].subName,
-  //       index: updatedVerb.part1[i].index.join(','),
-  //     };
-  //   }
-  //   tempData[5] = {
-  //     name: updatedVerb.part3.subName,
-  //     index: updatedVerb.part3.index.join(','),
-  //   };
-  //   updatedVerb.part2.map((item, index) => {
-  //     tempData[6 + index] = {
-  //       name: item.subName,
-  //       index: item.index.join(','),
-  //     };
-  //     index++;
-  //   });
-  //   tempImg[0] = updatedVerb.image;
-  //   updatedVerb.part2.map((item, index) => {
-  //     if (item.image) tempImg[index + 6] = item.image;
-  //   });
-  //   setIsUpdate(false);
-  // }
-
-  const units = [];
-  for (let i = 1; i <= numWords; i++) {
-    units.push(
+  const renderUnits = () => {
+    let u = [];
+    u[0] = (
       <VerbsFormUnitWithImg
-        key={i}
+        key={0}
         unitName="Wort:"
         tempImg={tempImg}
         setVerbData={setTempData}
-        verbData={tempData}
-        imgNumber={5 + i}
+        imgNumber={6}
         placeholder="einen Apfel"
         isUpdate={isUpdate}
         verb={verb}
@@ -134,11 +99,44 @@ export default function VerbsFormModal(props: VerbsFormModalProps) {
         setUpdatedVerb={setUpdatedVerb}
         newVerb={newVerb}
         updatedVerb={updatedVerb}
+        valueName={newVerb.part2[0].subName}
+        valueIndex={newVerb.part2[0].index}
+        part2Num={0}
       />
     );
-  }
+    setUnits(u);
+  };
+  const render = () => {
+    return units.map((item: any) => {
+      return item;
+    });
+  };
 
   const handleAddUnit = () => {
+    setUnits((prevUnit: any) => [
+      ...prevUnit,
+      <VerbsFormUnitWithImg
+        key={numWords}
+        unitName="Wort:"
+        tempImg={tempImg}
+        setVerbData={setTempData}
+        imgNumber={6}
+        placeholder="einen Apfel"
+        isUpdate={isUpdate}
+        verb={verb}
+        setNewVerb={setNewVerb}
+        setUpdatedVerb={setUpdatedVerb}
+        newVerb={newVerb}
+        updatedVerb={updatedVerb}
+        valueName={
+          newVerb.part2[numWords] ? newVerb.part2[numWords].subName : ''
+        }
+        valueIndex={
+          newVerb.part2[numWords] ? newVerb.part2[numWords].index : ''
+        }
+        part2Num={numWords}
+      />,
+    ]);
     setNumWords((prevNumUnits) => prevNumUnits + 1);
   };
   const handleMinusUnit = () => {
@@ -279,6 +277,12 @@ export default function VerbsFormModal(props: VerbsFormModalProps) {
                     placeholder="essen"
                     isUpdate={isUpdate}
                     verb={verb}
+                    valueName={isUpdate ? updatedVerb.name : newVerb.name}
+                    valueIndex={isUpdate ? updatedVerb.index : newVerb.index}
+                    setNewVerb={setNewVerb}
+                    setUpdatedVerb={setUpdatedVerb}
+                    newVerb={newVerb}
+                    updatedVerb={updatedVerb}
                   />
                   <div className={styles.inputContainer}>
                     <label>haben</label>
@@ -300,7 +304,6 @@ export default function VerbsFormModal(props: VerbsFormModalProps) {
                   </div>
                   <VerbsFormUnit
                     unitName="Vorsilbe"
-                    verbData={tempData}
                     verbNumber={1}
                     setVerbData={setTempData}
                     placeholder="über"
@@ -325,7 +328,6 @@ export default function VerbsFormModal(props: VerbsFormModalProps) {
                 <div className={styles.column}>
                   <VerbsFormUnit
                     unitName="1.S "
-                    verbData={tempData}
                     verbNumber={2}
                     setVerbData={setTempData}
                     placeholder="esse"
@@ -348,7 +350,6 @@ export default function VerbsFormModal(props: VerbsFormModalProps) {
                   />
                   <VerbsFormUnit
                     unitName="3.S "
-                    verbData={tempData}
                     verbNumber={3}
                     setVerbData={setTempData}
                     placeholder="isst"
@@ -371,7 +372,6 @@ export default function VerbsFormModal(props: VerbsFormModalProps) {
                   />
                   <VerbsFormUnit
                     unitName="1.P "
-                    verbData={tempData}
                     verbNumber={4}
                     setVerbData={setTempData}
                     placeholder="essen"
@@ -394,14 +394,13 @@ export default function VerbsFormModal(props: VerbsFormModalProps) {
                   />
                 </div>
                 <div className={styles.columnWithScrolling}>
-                  {units}
+                  {units.length === 0 ? renderUnits() : units}
                   <a onClick={handleAddUnit}>+</a>
                   <a onClick={handleMinusUnit}>-</a>
                 </div>
                 <div>
                   <VerbsFormUnit
                     unitName="PII "
-                    verbData={tempData}
                     verbNumber={5}
                     setVerbData={setTempData}
                     isUpdate={isUpdate}

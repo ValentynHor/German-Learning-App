@@ -25,3 +25,12 @@ export interface IVerb {
   part2: Part[];
   part3: Part;
 }
+
+export interface IEditingIcons {
+  iconEdit: string;
+  iconEditHover: string;
+  iconDelete: string;
+  iconDeleteHover: string;
+  iconCreate: string;
+  iconCreateHover: string;
+}

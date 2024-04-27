@@ -1,6 +1,6 @@
-import { IVerb } from '../../../data/interfaces';
-import { verbs } from '../../../data/verbs';
-import { parseString } from './VerbsFormModal';
+import { IVerb } from '../../../../data/interfaces';
+import { verbs } from '../../../../data/verbs';
+import { parseString } from '../verbsEditing/VerbsFormModal';
 import styles from './verbsFormModal.module.css';
 
 type UnitVerbsForm = {
@@ -11,7 +11,6 @@ type UnitVerbsForm = {
 type UnitVerbsFormProps = {
   unitName: string;
   placeholder: string;
-  verbData: UnitVerbsForm[];
   verbNumber: number;
   setVerbData: (data: UnitVerbsForm[]) => void;
   isUpdate?: boolean;
@@ -19,16 +18,16 @@ type UnitVerbsFormProps = {
   valueName?: any;
   valueIndex?: any;
   setTempData2?: (data: any) => void;
-  setNewVerb?: (data: any) => void;
-  setUpdatedVerb?: (data: any) => void;
+  setNewVerb: (data: any) => void;
+  setUpdatedVerb: (data: any) => void;
   newVerb?: any;
   updatedVerb?: any;
+  part2Num?: number;
 };
 
 export default function VerbsFormUnit(props: UnitVerbsFormProps) {
   const {
     verbNumber,
-    verbData,
     setVerbData,
     placeholder,
     setTempData2,
@@ -38,6 +37,7 @@ export default function VerbsFormUnit(props: UnitVerbsFormProps) {
     setNewVerb,
     setUpdatedVerb,
     newVerb,
+    part2Num,
   } = props;
   let { unitName, valueName, valueIndex } = props;
 
@@ -116,9 +116,61 @@ export default function VerbsFormUnit(props: UnitVerbsFormProps) {
         newNewVerb = { ...newNewVerb, prefix: newNewVerb.prefix };
         break;
       }
+      case 'Verb': {
+        if (n === 'name') {
+          newUpdatedVerb = { ...newUpdatedVerb, name: event.target.value };
+          newNewVerb = { ...newNewVerb, name: event.target.value };
+        } else {
+          newUpdatedVerb = { ...newUpdatedVerb, index: event.target.value };
+          newNewVerb = { ...newNewVerb, index: event.target.value };
+        }
+        break;
+      }
+      case 'Wort:': {
+        if (isUpdate) {
+          if (part2Num !== undefined) {
+            setUpdatedVerb({
+              ...updatedVerb,
+              part2: [
+                {
+                  ...[...updatedVerb.part2][part2Num],
+                  [n === 'name' ? 'subName' : 'index']: event.target.value,
+                },
+              ],
+            });
+          }
+        } else {
+          if (part2Num !== undefined) {
+            const part2 = [...newVerb.part2];
+
+            part2[part2Num] = {
+              ...part2[part2Num],
+              [n === 'name' ? 'subName' : 'index']: event.target.value,
+            };
+
+            newVerb.part2 = part2;
+
+            setNewVerb({
+              ...newVerb,
+            });
+
+            // setNewVerb({
+            //   ...newVerb,
+            //   part2: [
+            //     {
+            //       ...[...newVerb.part2][part2Num],
+            //       [n === 'name' ? 'subName' : 'index']: event.target.value,
+            //     },
+            //   ],
+            // });
+          }
+        }
+        console.log('🚀 ~ VerbsFormUnit ~ newVerb:', newVerb);
+        break;
+      }
     }
-    setUpdatedVerb!({ ...newUpdatedVerb });
-    setNewVerb!({ ...newNewVerb });
+    //setUpdatedVerb({ ...newUpdatedVerb });
+    // setNewVerb(newNewVerb);
   };
 
   return (
